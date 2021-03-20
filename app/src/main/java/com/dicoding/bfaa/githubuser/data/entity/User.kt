@@ -1,4 +1,4 @@
-package com.dicoding.bfaa.githubuser.data
+package com.dicoding.bfaa.githubuser.data.entity
 
 data class User(
     val username: String,
