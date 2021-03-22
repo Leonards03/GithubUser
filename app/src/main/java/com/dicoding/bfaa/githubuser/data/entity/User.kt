@@ -9,7 +9,6 @@ data class User(
     val name: String,
     val avatar: Int,
     val location: String,
-    val repository: Int, // arrayList?
-    val follower: Int, // arrayList?
-    val following: Int // arrayList?
+    val follower: String, // arrayList?
+    val following: String // arrayList?
 ) : Parcelable
