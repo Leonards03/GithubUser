@@ -1,28 +1,43 @@
 package com.dicoding.bfaa.githubuser.adapter
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.dicoding.bfaa.githubuser.data.User
+import com.bumptech.glide.Glide
+import com.dicoding.bfaa.githubuser.R
+import com.dicoding.bfaa.githubuser.data.entity.User
+import com.dicoding.bfaa.githubuser.databinding.ItemRowLayoutBinding
 
-class UserAdapter(private val userList: ArrayList<User>):
+class UserAdapter(private val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
-    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-
-        fun bind(user: User){
-
-        }
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
-        TODO("Not yet implemented")
+        val view: View =
+            LayoutInflater.from(parent.context).inflate(R.layout.item_row_layout, parent, false)
+        return UserViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
-        TODO("Not yet implemented")
+        holder.bind(userList[position])
     }
 
-    override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+    override fun getItemCount(): Int = userList.size
+
+    inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        private val binding by lazy {
+            ItemRowLayoutBinding.bind(itemView)
+        }
+
+        fun bind(user: User) {
+            with(binding) {
+                Glide
+                    .with(itemView.context)
+                    .load(user.avatar)
+                    .into(imgPhoto)
+                tvName.text = user.name
+                tvUsername.text = user.username
+            }
+        }
     }
 }
