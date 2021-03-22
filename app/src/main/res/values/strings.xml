@@ -3,19 +3,86 @@
 
 
     <string-array name="users_username">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
-        <item>10</item>
+        <item>Leonards03</item>
+        <item>codeSTACKr</item>
+        <item>codediodeio</item>
+        <item>benawad</item>
+        <item>florinpop17</item>
+        <item>Dimbreath</item>
+        <item>sandhikagalih</item>
+        <item>ForrestKnight</item>
+        <item>hdodenhof</item>
+        <item>wasabeef</item>
+        <item>nisrulz</item>
     </string-array>
     
     <string-array name="users_name">
+        <item>Edwin Leonard Salim</item>
+        <item>Jesse Hall</item>
+        <item>Jeff Delaney</item>
+        <item>Ben Awad</item>
+        <item>Florin Pop</item>
+        <item>Dimbreath</item>
+        <item>Sandhika Galih</item>
+        <item>Forrest Knight</item>
+        <item>Henning Dodenhof</item>
+        <item>Daichi Furiya</item>
+        <item>Nishant Srivastava</item>
+    </string-array>
 
+    <string-array name="users_avatar">
+        <item>@drawable/mein</item>
+        <item>@drawable/codestackr</item>
+        <item>@drawable/codediodeio</item>
+        <item>@drawable/benawad</item>
+        <item>@drawable/florinpop17</item>
+        <item>@drawable/dimbreath</item>
+        <item>@drawable/sandhikagalih</item>
+        <item>@drawable/forrestknight</item>
+        <item>@drawable/hdodenhof</item>
+        <item>@drawable/wasabeef</item>
+        <item>@drawable/nisrulz</item>
+    </string-array>
+
+    <string-array name="users_location">
+        <item>Jakarta, Indonesia</item>
+        <item>-</item>
+        <item>Phoenix, AZ</item>
+        <item>Austin, TX</item>
+        <item>Romania</item>
+        <item>-</item>
+        <item>Indonesia</item>
+        <item>Virgina Beach, VA</item>
+        <item>Hamburg, Germany</item>
+        <item>Tokyo, Japan</item>
+        <item>Berlin, Germany</item>
+    </string-array>
+
+    <string-array name="users_followers">
+        <item>2</item>
+        <item>1k</item>
+        <item>5k</item>
+        <item>16.6k</item>
+        <item>6.3k</item>
+        <item>163</item>
+        <item>4.5k</item>
+        <item>5.7k</item>
+        <item>634</item>
+        <item>7.9k</item>
+        <item>2k</item>
+    </string-array>
+    
+    <string-array name="users_following">
+        <item>3</item>
+        <item>6</item>
+        <item>83</item>
+        <item>4</item>
+        <item>34</item>
+        <item>11</item>
+        <item>3</item>
+        <item>3</item>
+        <item>3</item>
+        <item>56</item>
+        <item>5</item>
     </string-array>
 </resources>
