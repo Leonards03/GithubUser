@@ -1,88 +1,113 @@
 <resources>
     <string name="app_name">Github User</string>
+    <string name="followers"><b>%s</b> Followers</string>
+    <string name="following"><b>%s</b> Following</string>
+    <string name="favorite">Favorite</string>
+    <string name="share">Share</string>
+    <string name="notification_favorite">%s added to Favorite User</string>
 
-
-    <string-array name="users_username">
-        <item>Leonards03</item>
-        <item>codeSTACKr</item>
-        <item>codediodeio</item>
-        <item>benawad</item>
-        <item>florinpop17</item>
-        <item>Dimbreath</item>
-        <item>sandhikagalih</item>
-        <item>ForrestKnight</item>
-        <item>hdodenhof</item>
-        <item>wasabeef</item>
-        <item>nisrulz</item>
-    </string-array>
-    
-    <string-array name="users_name">
-        <item>Edwin Leonard Salim</item>
-        <item>Jesse Hall</item>
-        <item>Jeff Delaney</item>
-        <item>Ben Awad</item>
-        <item>Florin Pop</item>
-        <item>Dimbreath</item>
-        <item>Sandhika Galih</item>
-        <item>Forrest Knight</item>
-        <item>Henning Dodenhof</item>
-        <item>Daichi Furiya</item>
-        <item>Nishant Srivastava</item>
+    <!--    provided resources-->
+    <string-array name="username">
+        <item>JakeWharton</item>
+        <item>amitshekhariitbhu</item>
+        <item>romainguy</item>
+        <item>chrisbanes</item>
+        <item>tipsy</item>
+        <item>ravi8x</item>
+        <item>jasoet</item>
+        <item>budioktaviyan</item>
+        <item>hendisantika</item>
+        <item>sidiqpermana</item>
     </string-array>
 
-    <string-array name="users_avatar">
-        <item>@drawable/mein</item>
-        <item>@drawable/codestackr</item>
-        <item>@drawable/codediodeio</item>
-        <item>@drawable/benawad</item>
-        <item>@drawable/florinpop17</item>
-        <item>@drawable/dimbreath</item>
-        <item>@drawable/sandhikagalih</item>
-        <item>@drawable/forrestknight</item>
-        <item>@drawable/hdodenhof</item>
-        <item>@drawable/wasabeef</item>
-        <item>@drawable/nisrulz</item>
+    <string-array name="name">
+        <item>Jake Wharton</item>
+        <item>Amit Shekhar</item>
+        <item>Romain Guy</item>
+        <item>Chris Banes</item>
+        <item>David</item>
+        <item>Ravi Tamada</item>
+        <item>Deny Prasetyo</item>
+        <item>Budi Oktaviyan</item>
+        <item>Hendi Santika</item>
+        <item>Sidiq Permana</item>
     </string-array>
 
-    <string-array name="users_location">
+    <string-array name="location">
+        <item>Pittsburgh, PA, USA</item>
+        <item>New Delhi, India</item>
+        <item>California</item>
+        <item>Sydney, Australia</item>
+        <item>Trondheim, Norway</item>
+        <item>India</item>
+        <item>Kotagede, Yogyakarta, Indonesia</item>
         <item>Jakarta, Indonesia</item>
-        <item>-</item>
-        <item>Phoenix, AZ</item>
-        <item>Austin, TX</item>
-        <item>Romania</item>
-        <item>-</item>
-        <item>Indonesia</item>
-        <item>Virgina Beach, VA</item>
-        <item>Hamburg, Germany</item>
-        <item>Tokyo, Japan</item>
-        <item>Berlin, Germany</item>
+        <item>Bojongsoang - Bandung Jawa Barat</item>
+        <item>Jakarta Indonesia</item>
     </string-array>
 
-    <string-array name="users_followers">
-        <item>2</item>
-        <item>1k</item>
-        <item>5k</item>
-        <item>16.6k</item>
-        <item>6.3k</item>
-        <item>163</item>
-        <item>4.5k</item>
-        <item>5.7k</item>
-        <item>634</item>
-        <item>7.9k</item>
-        <item>2k</item>
-    </string-array>
-    
-    <string-array name="users_following">
-        <item>3</item>
-        <item>6</item>
-        <item>83</item>
-        <item>4</item>
-        <item>34</item>
-        <item>11</item>
-        <item>3</item>
-        <item>3</item>
-        <item>3</item>
+    <string-array name="repository">
+        <item>102</item>
+        <item>37</item>
+        <item>9</item>
+        <item>30</item>
         <item>56</item>
-        <item>5</item>
+        <item>28</item>
+        <item>44</item>
+        <item>110</item>
+        <item>1064</item>
+        <item>65</item>
+    </string-array>
+
+    <string-array name="company">
+        <item>Google, Inc.</item>
+        <item>MindOrksOpenSource</item>
+        <item>Google</item>
+        <item>Google working on @android</item>
+        <item>Working Group Two</item>
+        <item>AndroidHive | Droid5</item>
+        <item>gojek-engineering</item>
+        <item>KotlinID</item>
+        <item>JVMDeveloperID @KotlinID @IDDevOps</item>
+        <item>Nusantara Beta Studio</item>
+    </string-array>
+
+    <string-array name="followers">
+        <item>56995</item>
+        <item>5153</item>
+        <item>7972</item>
+        <item>14725</item>
+        <item>788</item>
+        <item>18628</item>
+        <item>277</item>
+        <item>178</item>
+        <item>428</item>
+        <item>465</item>
+    </string-array>
+
+    <string-array name="following">
+        <item>12</item>
+        <item>2</item>
+        <item>0</item>
+        <item>1</item>
+        <item>0</item>
+        <item>3</item>
+        <item>39</item>
+        <item>23</item>
+        <item>61</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="avatar">
+        <item>@drawable/user1</item>
+        <item>@drawable/user2</item>
+        <item>@drawable/user3</item>
+        <item>@drawable/user4</item>
+        <item>@drawable/user5</item>
+        <item>@drawable/user6</item>
+        <item>@drawable/user7</item>
+        <item>@drawable/user8</item>
+        <item>@drawable/user9</item>
+        <item>@drawable/user10</item>
     </string-array>
 </resources>
