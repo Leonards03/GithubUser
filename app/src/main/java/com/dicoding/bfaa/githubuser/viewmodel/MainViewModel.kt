@@ -3,7 +3,7 @@ package com.dicoding.bfaa.githubuser.viewmodel
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import com.dicoding.bfaa.githubuser.data.entity.User
-import com.dicoding.bfaa.githubuser.repository.Repository
+import com.dicoding.bfaa.githubuser.data.repository.Repository
 
 class MainViewModel(application: Application) : AndroidViewModel(
     application

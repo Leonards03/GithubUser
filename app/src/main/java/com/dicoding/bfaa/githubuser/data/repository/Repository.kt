@@ -1,4 +1,4 @@
-package com.dicoding.bfaa.githubuser.repository
+package com.dicoding.bfaa.githubuser.data.repository
 
 import android.app.Application
 import com.dicoding.bfaa.githubuser.R
