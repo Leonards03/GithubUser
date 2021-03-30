@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">Github User</string>
+    <string name="home">Home</string>
     <string name="followers"><b>%s</b> Followers</string>
     <string name="following"><b>%s</b> Following</string>
     <string name="favorite">Favorite</string>

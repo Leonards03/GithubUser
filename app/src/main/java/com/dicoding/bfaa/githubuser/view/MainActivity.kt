@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel = MainViewModel(application)
 
-        supportActionBar?.title = "Home"
+        supportActionBar?.title = getString(R.string.home)
         with(binding) {
             rvUsers.layoutManager = LinearLayoutManager(this@MainActivity)
             val userAdapter = UserAdapter(mainViewModel.getUsers())
