@@ -12,6 +12,12 @@ import com.dicoding.bfaa.githubuser.databinding.ItemRowLayoutBinding
 class UserAdapter(private val userList: ArrayList<User>) :
     RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
+    private lateinit var onClickCallback: OnClickCallback
+
+    fun setOnClickCallback(onClickCallback: OnClickCallback) {
+        this.onClickCallback = onClickCallback
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.item_row_layout, parent, false)
@@ -37,7 +43,15 @@ class UserAdapter(private val userList: ArrayList<User>) :
                     .into(imgPhoto)
                 tvName.text = user.name
                 tvUsername.text = user.username
+
+                itemView.setOnClickListener {
+                    onClickCallback.onItemClicked(user)
+                }
             }
         }
+    }
+
+    interface OnClickCallback {
+        fun onItemClicked(user: User)
     }
 }
