@@ -4,7 +4,9 @@
     <string name="following"><b>%s</b> Following</string>
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
-    <string name="notification_favorite">%s added to Favorite User</string>
+    <string name="message_favorite">%s added to Favorite User</string>
+    <string name="message_share">Hey, check out this profile !\n%s\nhttps://www.github.com/%s</string>
+    <string name="repositories">Repositories</string>
 
     <!--    provided resources-->
     <string-array name="username">
