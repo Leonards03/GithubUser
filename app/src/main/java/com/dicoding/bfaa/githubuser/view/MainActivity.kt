@@ -1,42 +1,46 @@
 package com.dicoding.bfaa.githubuser.view
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.bfaa.githubuser.R
 import com.dicoding.bfaa.githubuser.adapter.UserAdapter
-import com.dicoding.bfaa.githubuser.data.UsersData
 import com.dicoding.bfaa.githubuser.data.entity.User
 import com.dicoding.bfaa.githubuser.databinding.ActivityMainBinding
+import com.dicoding.bfaa.githubuser.viewmodel.MainViewModel
 
 class MainActivity : AppCompatActivity() {
-    private val binding: ActivityMainBinding by lazy{
+    private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
 
-    private lateinit var usersData: UsersData
+    private lateinit var mainViewModel: MainViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setTheme(R.style.Theme_GithubUser)
         setContentView(binding.root)
 
-        with(binding){
-            val userAdapter = UserAdapter(getList())
+        mainViewModel = MainViewModel(application)
+
+        supportActionBar?.title = "Home"
+        with(binding) {
+            rvUsers.layoutManager = LinearLayoutManager(this@MainActivity)
+            val userAdapter = UserAdapter(mainViewModel.getUsers())
             rvUsers.adapter = userAdapter
+
+            userAdapter.setOnClickCallback(object : UserAdapter.OnClickCallback {
+                override fun onItemClicked(user: User) {
+                    toDetailsActivity(user)
+                }
+            })
         }
     }
 
-    private fun getList(): ArrayList<User> {
-        with(resources){
-            usersData = UsersData(
-                getStringArray(R.array.users_username),
-                getStringArray(R.array.users_name),
-                obtainTypedArray(R.array.users_avatar),
-                getStringArray(R.array.users_location),
-                getStringArray(R.array.users_followers),
-                getStringArray(R.array.users_following)
-            )
-        }
-
-        return usersData.list
+    private fun toDetailsActivity(user: User) {
+        val detailsIntent = Intent(this@MainActivity, DetailActivity::class.java)
+        detailsIntent.putExtra(DetailActivity.EXTRA_USER_DATA, user)
+        startActivity(detailsIntent)
     }
 }
