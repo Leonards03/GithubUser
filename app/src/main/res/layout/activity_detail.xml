@@ -123,6 +123,7 @@
                     android:layout_width="32dp"
                     android:layout_height="32dp"
                     android:background="@color/blue_grey"
+                    android:contentDescription="@string/repository_icon"
                     android:scaleType="center"
                     android:src="@drawable/icons8_repository_24" />
             </androidx.cardview.widget.CardView>

@@ -7,6 +7,7 @@
     <string name="message_favorite">%s added to Favorite User</string>
     <string name="message_share">Hey, check out this profile !\n%s\nhttps://www.github.com/%s</string>
     <string name="repositories">Repositories</string>
+    <string name="repository_icon">Repository Icon</string>
 
     <!--    provided resources-->
     <string-array name="username">
