@@ -68,8 +68,8 @@ class DetailActivity : AppCompatActivity() {
         when (item.itemId) {
             android.R.id.home -> onBackPressed()
             R.id.action_menu_share -> {
-                val name = user?.name ?: ""
-                val username = user?.username ?: ""
+                val name = user?.name
+                val username = user?.username
 
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
