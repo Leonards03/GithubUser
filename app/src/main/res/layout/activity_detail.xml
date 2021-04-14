@@ -1,151 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".view.DetailActivity">
+    android:layout_height="match_parent">
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/card_profile"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_tiny"
-        app:cardElevation="@dimen/cardview_default_elevation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:theme="@style/Theme.NavigationDrawer.AppBarOverlay">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            style="@style/Widget.MaterialComponents.ActionBar.Primary"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:paddingStart="@dimen/spacing_normal"
-            android:paddingTop="@dimen/spacing_large"
-            android:paddingEnd="@dimen/spacing_normal"
-            android:paddingBottom="@dimen/spacing_normal">
+            android:layout_height="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
+            app:title="@string/title_detail"
+            app:popupTheme="@style/Theme.NavigationDrawer.PopupOverlay"
+            app:menu="@menu/detail_menu" />
 
-            <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/img_profile"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/user1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+        <com.google.android.material.circularreveal.cardview.CircularRevealCardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-            <TextView
-                android:id="@+id/tv_following"
-                style="@style/TextView"
-                android:layout_marginStart="@dimen/spacing_normal"
-                app:layout_constraintStart_toEndOf="@id/tv_followers"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="10 Following" />
-
-            <TextView
-                android:id="@+id/tv_followers"
-                style="@style/TextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="10 Followers" />
-
-            <TextView
-                android:id="@+id/tv_name"
-                style="@style/TextView.Headline"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_followers"
-                tools:text="Edwin Leonard Salim" />
-
-            <TextView
-                android:id="@+id/tv_username"
-                style="@style/TextView.WithDrawable"
-                android:layout_marginTop="@dimen/spacing_tiny"
-                app:drawableStartCompat="@drawable/ic_alternate_email_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_name"
-                tools:text="Leonards03" />
-
-            <TextView
-                android:id="@+id/tv_company"
-                style="@style/TextView.WithDrawable"
-                android:layout_marginTop="@dimen/spacing_small"
-                app:drawableStartCompat="@drawable/ic_work_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_username"
-                tools:text="Company" />
-
-            <TextView
-                android:id="@+id/tv_location"
-                style="@style/TextView.WithDrawable"
-                android:layout_marginTop="@dimen/spacing_small"
-                app:drawableStartCompat="@drawable/ic_room_16"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_company"
-                tools:text="Jakarta, Indonesia" />
-
-            <Button
-                android:id="@+id/btn_favorite"
-                style="@style/Widget.AppCompat.Button.Colored"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/spacing_wide"
-                android:text="@string/favorite"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tv_location" />
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
+                android:paddingStart="@dimen/spacing_normal"
+                android:paddingTop="@dimen/spacing_large"
+                android:paddingEnd="@dimen/spacing_normal"
+                android:paddingBottom="@dimen/spacing_normal">
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/spacing_large"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/card_profile">
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_profile"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:src="@drawable/user1" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+                <TextView
+                    android:id="@+id/tv_following"
+                    style="@style/TextView"
+                    android:layout_marginStart="@dimen/spacing_normal"
+                    app:layout_constraintStart_toEndOf="@id/tv_followers"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="10 Following" />
+
+                <TextView
+                    android:id="@+id/tv_followers"
+                    style="@style/TextView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="10 Followers" />
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    style="@style/TextView.Headline"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_followers"
+                    tools:text="Edwin Leonard Salim" />
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    style="@style/TextView.Subtitle"
+                    android:layout_marginTop="@dimen/spacing_tiny"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_name"
+                    tools:text="Leonards03" />
+
+                <TextView
+                    android:id="@+id/tv_company"
+                    style="@style/TextView.WithDrawable"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    app:drawableStartCompat="@drawable/ic_work_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_username"
+                    tools:text="Company" />
+
+                <TextView
+                    android:id="@+id/tv_location"
+                    style="@style/TextView.WithDrawable"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    app:drawableStartCompat="@drawable/ic_room_16"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/tv_company"
+                    tools:text="Jakarta, Indonesia" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingStart="@dimen/spacing_small"
-            android:paddingTop="@dimen/spacing_normal"
-            android:paddingEnd="@dimen/spacing_small"
-            android:paddingBottom="@dimen/spacing_normal">
+            app:tabBackground="@color/white"
+            app:tabIndicatorHeight="@dimen/spacing_tiny"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:tabSelectedTextColor="@color/primaryDarkColor">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/ic_repository"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
-                app:cardCornerRadius="@dimen/radius_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/repositories" />
 
-                <ImageView
-                    android:layout_width="32dp"
-                    android:layout_height="32dp"
-                    android:background="@color/blue_grey"
-                    android:contentDescription="@string/repository_icon"
-                    android:scaleType="center"
-                    android:src="@drawable/icons8_repository_24" />
-            </androidx.cardview.widget.CardView>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_followers" />
 
-            <TextView
-                android:id="@+id/tv_repository_label"
-                style="@style/TextView.Large"
-                android:layout_marginStart="@dimen/spacing_small"
-                android:text="@string/repositories"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@id/ic_repository"
-                app:layout_constraintTop_toTopOf="parent" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tab_following" />
+        </com.google.android.material.tabs.TabLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-            <TextView
-                android:id="@+id/tv_repository_count"
-                style="@style/TextView.Large"
-                android:layout_marginEnd="@dimen/spacing_small"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="14" />
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </com.google.android.material.card.MaterialCardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/extendedFAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:layout_gravity="bottom|end"
+        android:contentDescription="@string/extended_floating_action_button"
+        android:text="@string/extended_fab_label"
+        app:icon="@drawable/ic_baseline_star_24" />
+</com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>

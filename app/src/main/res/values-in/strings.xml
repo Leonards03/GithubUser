@@ -1,27 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Github User</string>
     <string name="home">Home</string>
     <string name="followers"><b>%s</b> Followers</string>
     <string name="following"><b>%s</b> Following</string>
-    <string name="favorite">Favorite</string>
-    <string name="share">Share</string>
-    <string name="message_favorite">%s added to Favorite User</string>
-    <string name="message_share">Hey, check out this profile !\nhttps://www.github.com/%s</string>
+    <string name="favorite">Favorit</string>
+    <string name="share">Bagikan</string>
+    <string name="message_favorite">%s Ditambahkan ke Favorit</string>
+    <string name="message_share">Hai, cek profile ini!\nhttps://www.github.com/%s</string>
     <string name="message_error">Something went wrong, try again later.</string>
     <string name="hint_search">Write down a username i.e Leonards03</string>
-    <string name="repositories">Repositories</string>
-    <string name="repository_icon">Repository Icon</string>
-    <string name="search">Search</string>
-    <string name="tab_repositories">Repositories</string>
+    <string name="repositories">Repositori</string>
+    <string name="repository_icon">Ikon Repositori</string>
+    <string name="search">Cari Pengguna</string>
+    <string name="tab_repositories">Repositori</string>
     <string name="tab_followers">Followers</string>
     <string name="tab_following">Following</string>
     <string name="nav_home">Home</string>
-    <string name="nav_settings">Settings</string>
+    <string name="nav_settings">Pengaturan</string>
     <string name="extended_floating_action_button">Extended Floating Action Button</string>
     <string name="extended_fab_label">Favorite User</string>
-    <!-- Preference Resources -->
-    <string name="language_header">Language</string>
-    <string name="preference_lang">Change This Device Language</string>
+    <!-- Pengaturan -->
+    <string name="language_header">Bahasa</string>
+    <string name="preference_lang">asd</string>
     <string name="summary_lang">This will redirect you to Devices language settings</string>
     <string name="key_lang">key_localization</string>
     <string name="reminder_header">Reminder</string>

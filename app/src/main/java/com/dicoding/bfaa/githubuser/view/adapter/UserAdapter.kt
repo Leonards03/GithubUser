@@ -1,21 +1,30 @@
-package com.dicoding.bfaa.githubuser.adapter
+package com.dicoding.bfaa.githubuser.view.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.dicoding.bfaa.githubuser.R
-import com.dicoding.bfaa.githubuser.data.entity.User
+import com.dicoding.bfaa.githubuser.data.model.User
 import com.dicoding.bfaa.githubuser.databinding.ItemRowLayoutBinding
+import com.dicoding.bfaa.githubuser.view.ui.detail.DetailActivity
 
-class UserAdapter(private val userList: ArrayList<User>) :
-    RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+    private val userList = ArrayList<User>()
+    private var itemClickListener: ItemClickListener? = null
 
-    private lateinit var onClickCallback: OnClickCallback
+    fun setItemClickListener(itemClickListener: ItemClickListener){
+        this.itemClickListener = itemClickListener
+    }
 
-    fun setOnClickCallback(onClickCallback: OnClickCallback) {
-        this.onClickCallback = onClickCallback
+    fun setUsers(list: List<User>) {
+        with(userList) {
+            clear()
+            addAll(list)
+        }
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
@@ -41,17 +50,16 @@ class UserAdapter(private val userList: ArrayList<User>) :
                     .with(itemView.context)
                     .load(user.avatar)
                     .into(imgPhoto)
-                tvName.text = user.name
                 tvUsername.text = user.username
 
                 itemView.setOnClickListener {
-                    onClickCallback.onItemClicked(user)
+                    itemClickListener?.onItemClicked(user.username)
                 }
             }
         }
     }
 
-    interface OnClickCallback {
-        fun onItemClicked(user: User)
+    interface ItemClickListener {
+        fun onItemClicked(username: String)
     }
 }

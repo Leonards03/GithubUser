@@ -13,5 +13,10 @@
     <color name="grey_dark_light">#6D6D6D</color>
     <color name="blue_grey">#37474F</color>
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
     <color name="foreground">#F3F4FC</color>
+    <color name="light_blue_50">#FFE1F5FE</color>
+    <color name="light_blue_200">#FF81D4FA</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <color name="light_blue_900">#FF01579B</color>
 </resources>
