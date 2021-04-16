@@ -38,6 +38,7 @@ class FavoriteFragment : Fragment() {
         if (activity != null) {
             setupRecyclerView()
             setupObservers()
+            showEmptyState()
         }
     }
 
@@ -72,6 +73,12 @@ class FavoriteFragment : Fragment() {
                 Status.ERROR -> Log.e(TAG, resource.message.toString())
             }
         })
+    }
+
+    private fun showEmptyState() {
+        if (userAdapter.itemCount == 0) {
+            binding!!.emptyState.visible()
+        }
     }
 
     private fun setLoadingState(isDataLoading: Boolean) {

@@ -46,4 +46,6 @@
     <string name="remove_from_favorites">Remove from Favorites </string>S
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="nav_favorite">Favorite User</string>
+    <string name="label_empty">There is no one here</string>
+    <string name="description_empty">Go find some user that you might like,\n and add them to favorite!</string>
 </resources>
