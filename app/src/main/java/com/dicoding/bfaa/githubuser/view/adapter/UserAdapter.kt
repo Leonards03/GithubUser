@@ -1,6 +1,5 @@
 package com.dicoding.bfaa.githubuser.view.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,12 @@ import com.bumptech.glide.Glide
 import com.dicoding.bfaa.githubuser.R
 import com.dicoding.bfaa.githubuser.data.model.User
 import com.dicoding.bfaa.githubuser.databinding.ItemRowLayoutBinding
-import com.dicoding.bfaa.githubuser.view.ui.detail.DetailActivity
 
 class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private val userList = ArrayList<User>()
     private var itemClickListener: ItemClickListener? = null
 
-    fun setItemClickListener(itemClickListener: ItemClickListener){
+    fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListener = itemClickListener
     }
 

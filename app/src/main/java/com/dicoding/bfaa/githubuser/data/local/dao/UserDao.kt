@@ -4,27 +4,31 @@ import androidx.room.*
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowersEntity
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowingEntity
 import com.dicoding.bfaa.githubuser.data.local.entity.UserEntity
-import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface UserDao {
     @Query("SELECT * FROM users WHERE username = :username")
-    fun getUser(username: String): Flow<UserEntity>
+    suspend fun getUser(username: String): UserEntity
 
     @Query("SELECT * FROM users")
-    fun getFavoriteList(): List<UserEntity>
+    suspend fun getFavoriteList(): List<UserEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun favoriteUser(user: UserEntity)
+    suspend fun insertUser(user: UserEntity)
 
     @Delete
-    fun unfavoriteUser(user: UserEntity)
+    suspend fun removeUser(user: UserEntity)
 
-    @Query("SELECT * FROM followers")
-    fun getFollowers(): List<FollowersEntity>
+    @Query("SELECT * FROM followers WHERE owner = :owner ")
+    suspend fun getFollowers(owner: String): List<FollowersEntity>
 
-    @Query("SELECT * FROM following")
-    fun getFollowings(): List<FollowingEntity>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFollowers(followers: List<FollowersEntity>)
 
+    @Query("SELECT * FROM following WHERE owner = :owner")
+    suspend fun getFollowings(owner: String): List<FollowingEntity>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertFollowing(following: List<FollowingEntity>)
 
 }

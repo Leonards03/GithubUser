@@ -56,7 +56,7 @@ class FollowersFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        detailViewModel.fetchUserFollowers().observe(requireActivity(), { resource ->
+        detailViewModel.userFollowers.observe(requireActivity(), { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
                     setLoadingState(false)

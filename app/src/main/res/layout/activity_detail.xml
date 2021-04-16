@@ -17,9 +17,9 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
-            app:title="@string/title_detail"
+            app:menu="@menu/detail_menu"
             app:popupTheme="@style/Theme.NavigationDrawer.PopupOverlay"
-            app:menu="@menu/detail_menu" />
+            app:title="@string/title_detail" />
 
         <com.google.android.material.circularreveal.cardview.CircularRevealCardView
             android:layout_width="match_parent"
@@ -96,9 +96,9 @@
             android:id="@+id/tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:layout_scrollFlags="scroll|enterAlways"
             app:tabBackground="@color/white"
             app:tabIndicatorHeight="@dimen/spacing_tiny"
-            app:layout_scrollFlags="scroll|enterAlways"
             app:tabSelectedTextColor="@color/primaryDarkColor">
 
             <com.google.android.material.tabs.TabItem
@@ -122,15 +122,16 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:layout_marginBottom="60dp"/>
 
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/extendedFAB"
-        android:layout_width="wrap_content"
+    <Button
+        android:id="@+id/btn_favorite"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:layout_gravity="bottom|end"
-        android:contentDescription="@string/extended_floating_action_button"
-        android:text="@string/extended_fab_label"
-        app:icon="@drawable/ic_baseline_star_24" />
+        android:layout_marginStart="@dimen/spacing_small"
+        android:layout_marginEnd="@dimen/spacing_small"
+        android:text="@string/favorite"
+        app:layout_behavior="@string/bottom_sheet_behavior" />
+
 </com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>

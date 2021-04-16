@@ -6,10 +6,11 @@
     <string name="following"><b>%s</b> Following</string>
     <string name="favorite">Favorit</string>
     <string name="share">Bagikan</string>
-    <string name="message_favorite">%s Ditambahkan ke Favorit</string>
+    <string name="message_favorite">%s Ditambahkan ke Pengguna Favorit</string>
+    <string name="message_remove_favorite">%s dihapus dari Pengguna Favorit</string>
     <string name="message_share">Hai, cek profile ini!\nhttps://www.github.com/%s</string>
-    <string name="message_error">Something went wrong, try again later.</string>
-    <string name="hint_search">Write down a username i.e Leonards03</string>
+    <string name="message_error">Terdapat masalah, coba lagi dalam beberapa saat.</string>
+    <string name="hint_search">Masukan username yang ingin dicari cth. Leonards03</string>
     <string name="repositories">Repositori</string>
     <string name="repository_icon">Ikon Repositori</string>
     <string name="search">Cari Pengguna</string>
@@ -18,25 +19,32 @@
     <string name="tab_following">Following</string>
     <string name="nav_home">Home</string>
     <string name="nav_settings">Pengaturan</string>
-    <string name="extended_floating_action_button">Extended Floating Action Button</string>
-    <string name="extended_fab_label">Favorite User</string>
     <!-- Pengaturan -->
     <string name="language_header">Bahasa</string>
-    <string name="preference_lang">asd</string>
-    <string name="summary_lang">This will redirect you to Devices language settings</string>
+    <string name="preference_lang">Ubah bahasa pada perangkat ini</string>
+    <string name="summary_lang">Pengaturan ini akan mengarahkan anda ke halaman pengaturan bahasa perangkat ini</string>
     <string name="key_lang">key_localization</string>
-    <string name="reminder_header">Reminder</string>
-    <string name="preference_reminder">Set Daily Reminder</string>
-    <string name="summary_reminder">Send notification to remind you to open this apps on 9 AM</string>
+    <string name="reminder_header">Pengingat</string>
+    <string name="preference_reminder">Atur pengingat harian </string>
+    <string name="summary_reminder">Mengirimkan notifikasi kepada anda untuk membuka aplikasi setiap harinya pada jam 9 pagi</string>
     <string name="key_reminder">key_reminder</string>
     <!--  Navigation Drawer Resources  -->
     <string name="header_title">GitHub User</string>
-    <string name="header_text">Apps for finding GitHub User</string>
-    <string name="find_user_image">Find User Image</string>
-    <string name="label_suggestion">Explore Awesome User!</string>
-    <string name="label_suggestion_description">Find some Github profile here</string>
-    <string name="title_detail">Detail User</string>
-    <string name="nav_favorite_user">Favorites User</string>
+    <string name="header_text">Aplikasi untuk mencari pengguna GitHub</string>
+    <string name="find_user_image">Gambar Cari User</string>
+    <string name="label_suggestion">Cari user keren lainnya!</string>
+    <string name="label_suggestion_description">Cari profile beberapa profil Github disini</string>
+    <string name="title_detail">Detil User</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="notification_title">Halo!</string>
+    <string name="notification_text">Hei, jangan lupa buka Github User dan mengeksplor pengguna lainnya!</string>
+    <string name="title_favorite">Pengguna Favorit</string>
+
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites </string>S
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_favorite_user">Favorites User</string>
+    <string name="nav_favorite">Favorite User</string>
 </resources>

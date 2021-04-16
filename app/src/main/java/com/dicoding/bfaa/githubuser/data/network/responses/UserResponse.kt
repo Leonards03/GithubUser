@@ -1,6 +1,5 @@
 package com.dicoding.bfaa.githubuser.data.network.responses
 
-import com.dicoding.bfaa.githubuser.data.model.Repository
 import com.google.gson.annotations.SerializedName
 
 data class UserResponse(
@@ -20,15 +19,4 @@ data class UserResponse(
     val followers: Int?,
     @SerializedName("following")
     val following: Int?
-){
-    constructor(username: String, avatar: String) : this(
-        username,
-        null,
-        null,
-        avatar,
-        null,
-        null,
-        null,
-        null
-    )
-}
+)

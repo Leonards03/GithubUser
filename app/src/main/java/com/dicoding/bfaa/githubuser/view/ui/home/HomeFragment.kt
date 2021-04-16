@@ -1,14 +1,16 @@
 package com.dicoding.bfaa.githubuser.view.ui.home
 
+import android.app.SearchManager
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.widget.SearchView
+import androidx.core.content.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.bfaa.githubuser.R
 import com.dicoding.bfaa.githubuser.databinding.FragmentHomeBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
@@ -20,7 +22,7 @@ import dagger.hilt.android.AndroidEntryPoint
 class HomeFragment : Fragment() {
     private var binding: FragmentHomeBinding? = null
 
-    private val viewModel: SearchViewModel by activityViewModels()
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var userAdapter: UserAdapter
 
     override fun onCreateView(
@@ -28,6 +30,7 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
+        setHasOptionsMenu(true)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding!!.root
     }
@@ -78,15 +81,35 @@ class HomeFragment : Fragment() {
     private fun setLoadingState(isDataLoading: Boolean) {
         with(binding!!) {
             if (isDataLoading) {
-                tvSuggestionLabel.invisible()
-                tvSuggestionDescription.invisible()
-                imgSearch.invisible()
+                emptyState.invisible()
                 loading.visible()
             } else {
                 loading.invisible()
                 rvUsers.visible()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.home_menu, menu)
+        val searchManager = requireActivity().getSystemService<SearchManager>()
+        val searchView = menu.findItem(R.id.search).actionView as SearchView
+
+        with(searchView) {
+            setSearchableInfo(searchManager?.getSearchableInfo(requireActivity().componentName))
+            queryHint = resources.getString(R.string.hint_search)
+            setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    query?.let {
+                        if (it.isNotEmpty()) viewModel.passQuery(it)
+                    }
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean = false
+            })
+        }
+        super.onCreateOptionsMenu(menu, inflater)
     }
 
     override fun onDestroyView() {

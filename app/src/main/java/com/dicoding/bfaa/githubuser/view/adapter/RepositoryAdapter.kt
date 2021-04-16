@@ -1,10 +1,8 @@
 package com.dicoding.bfaa.githubuser.view.adapter
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.dicoding.bfaa.githubuser.R
 import com.dicoding.bfaa.githubuser.data.model.Repository
@@ -57,6 +55,7 @@ class RepositoryAdapter : RecyclerView.Adapter<RepositoryAdapter.RepositoryViewH
             }
         }
     }
+
     interface ItemClickListener {
         fun onItemClicked(url: String)
     }

@@ -32,8 +32,11 @@ class RepositoryMapper : ModelMapper<RepositoryResponse, Repository, RepositoryE
             language = model.language
         )
 
+    fun mapToEntities(repositories: List<Repository>): List<RepositoryEntity> =
+        repositories.map { repository -> mapToEntity(repository) }
 
-    fun mapFromEntites(entities: List<RepositoryEntity>): List<Repository> =
+
+    fun mapFromEntities(entities: List<RepositoryEntity>): List<Repository> =
         entities.map { entity -> mapFromEntity(entity) }
 
 }

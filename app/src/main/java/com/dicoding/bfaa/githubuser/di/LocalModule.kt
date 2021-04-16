@@ -18,7 +18,7 @@ object LocalModule {
     @Singleton
     @Provides
     fun provideLocalDataSource(userDao: UserDao, repositoryDao: RepositoryDao): LocalDataSource {
-        return LocalDataSource(userDao,repositoryDao)
+        return LocalDataSource(userDao, repositoryDao)
     }
 
     @Singleton
@@ -37,4 +37,5 @@ object LocalModule {
     @Singleton
     @Provides
     fun provideRepositoryDao(database: GithubDatabase): RepositoryDao = database.repoDao()
+
 }

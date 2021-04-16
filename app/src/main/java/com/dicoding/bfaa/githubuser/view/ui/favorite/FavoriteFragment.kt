@@ -1,4 +1,4 @@
-package com.dicoding.bfaa.githubuser.view.ui.detail
+package com.dicoding.bfaa.githubuser.view.ui.favorite
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,18 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.dicoding.bfaa.githubuser.databinding.FragmentFollowingBinding
+import com.dicoding.bfaa.githubuser.databinding.FragmentFavoriteBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
 import com.dicoding.bfaa.githubuser.utils.Status
 import com.dicoding.bfaa.githubuser.view.adapter.UserAdapter
+import com.dicoding.bfaa.githubuser.view.ui.detail.DetailActivity
+import dagger.hilt.android.AndroidEntryPoint
 
-class FollowingFragment : Fragment() {
-    private var binding: FragmentFollowingBinding? = null
-    private val detailViewModel: DetailViewModel by activityViewModels()
+@AndroidEntryPoint
+class FavoriteFragment : Fragment() {
+    private var binding: FragmentFavoriteBinding? = null
 
+    private val viewModel: FavoriteViewModel by viewModels()
     private lateinit var userAdapter: UserAdapter
 
     override fun onCreateView(
@@ -26,7 +29,7 @@ class FollowingFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        binding = FragmentFollowingBinding.inflate(inflater, container, false)
+        binding = FragmentFavoriteBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -40,14 +43,15 @@ class FollowingFragment : Fragment() {
 
     private fun setupRecyclerView() {
         with(binding!!) {
-            rvFollowing.layoutManager = LinearLayoutManager(activity)
+            rvUsers.layoutManager = LinearLayoutManager(activity)
             userAdapter = UserAdapter()
-            rvFollowing.adapter = userAdapter
+            rvUsers.adapter = userAdapter
 
             userAdapter.setItemClickListener(object : UserAdapter.ItemClickListener {
                 override fun onItemClicked(username: String) {
                     Intent(requireActivity(), DetailActivity::class.java).apply {
                         putExtra(DetailActivity.EXTRA_USERNAME, username)
+                        putExtra(DetailActivity.FROM_NETWORK, false)
                         startActivity(this)
                     }
                 }
@@ -56,20 +60,16 @@ class FollowingFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        detailViewModel.userFollowing.observe(requireActivity(), { resource ->
+        viewModel.favoriteUser.observe(requireActivity(), { resource ->
             when (resource.status) {
                 Status.SUCCESS -> {
-                    setLoadingState(false)
                     resource.data?.let { result ->
+                        setLoadingState(false)
                         userAdapter.setUsers(result)
                     }
                 }
-                Status.LOADING -> {
-                    setLoadingState(true)
-                }
-                Status.ERROR -> {
-                    Log.e(TAG, resource.message.toString())
-                }
+                Status.LOADING -> setLoadingState(true)
+                Status.ERROR -> Log.e(TAG, resource.message.toString())
             }
         })
     }
@@ -78,10 +78,10 @@ class FollowingFragment : Fragment() {
         with(binding!!) {
             if (isDataLoading) {
                 loading.visible()
-                rvFollowing.invisible()
+                rvUsers.invisible()
             } else {
                 loading.invisible()
-                rvFollowing.visible()
+                rvUsers.visible()
             }
         }
     }
@@ -92,6 +92,6 @@ class FollowingFragment : Fragment() {
     }
 
     companion object {
-        private val TAG = FollowingFragment::class.simpleName
+        private val TAG = FavoriteFragment::class.simpleName
     }
 }

@@ -6,6 +6,7 @@
     <string name="favorite">Favorite</string>
     <string name="share">Share</string>
     <string name="message_favorite">%s added to Favorite User</string>
+    <string name="message_remove_favorite">%s removed from Favorite User</string>
     <string name="message_share">Hey, check out this profile !\nhttps://www.github.com/%s</string>
     <string name="message_error">Something went wrong, try again later.</string>
     <string name="hint_search">Write down a username i.e Leonards03</string>
@@ -17,8 +18,6 @@
     <string name="tab_following">Following</string>
     <string name="nav_home">Home</string>
     <string name="nav_settings">Settings</string>
-    <string name="extended_floating_action_button">Extended Floating Action Button</string>
-    <string name="extended_fab_label">Favorite User</string>
     <!-- Preference Resources -->
     <string name="language_header">Language</string>
     <string name="preference_lang">Change This Device Language</string>
@@ -38,4 +37,13 @@
     <string name="nav_favorite_user">Favorites User</string>
     <string name="appwidget_text">EXAMPLE</string>
     <string name="add_widget">Add widget</string>
+
+    <string name="notification_title">Hello!</string>
+    <string name="notification_text">Hey, don\'t forget to explore amazing users today!</string>
+    <string name="title_favorite">Favorite User</string>
+
+    <string name="add_to_favorites">Add to Favorites</string>
+    <string name="remove_from_favorites">Remove from Favorites </string>S
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="nav_favorite">Favorite User</string>
 </resources>

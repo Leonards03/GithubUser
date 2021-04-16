@@ -37,8 +37,11 @@
         <TextView
             android:id="@+id/tv_repository_name"
             style="@style/TextView.Large"
+            android:layout_width="0dp"
             android:layout_marginStart="@dimen/spacing_small"
+            android:layout_marginEnd="@dimen/spacing_normal"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/tv_repository_language"
             app:layout_constraintStart_toEndOf="@id/ic_repository"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Github User" />

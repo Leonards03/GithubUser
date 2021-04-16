@@ -21,10 +21,16 @@
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_homeFragment_to_detailActivity"
-            app:destination="@id/detailActivity" />
+            app:destination="@id/detailActivity"
+            app:enterAnim="@android:anim/fade_in" />
     </fragment>
     <fragment
         android:id="@+id/navigation_settings"
-        android:name="com.dicoding.bfaa.githubuser.view.ui.settings.SettingsFragment"
+        android:name="com.dicoding.bfaa.githubuser.view.ui.home.SettingsFragment"
         android:label="@string/nav_settings" />
+    <fragment
+        android:id="@+id/navigation_favorite"
+        android:name="com.dicoding.bfaa.githubuser.view.ui.favorite.FavoriteFragment"
+        android:label="@string/nav_favorite"
+        tools:layout="@layout/fragment_favorite" />
 </navigation>
