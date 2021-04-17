@@ -12,6 +12,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GithubUser">
+        <provider
+            android:name=".data.local.provider.FavoriteUserContentProvider"
+            android:authorities="com.dicoding.bfaa.githubuser"
+            android:enabled="true"
+            android:exported="true"></provider>
+
         <receiver android:name=".widget.FavoriteUserWidget">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -21,9 +27,6 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/favorite_user_widget_info" />
         </receiver>
-
-        <activity android:name=".view.ui.favorite.FavoriteActivity" />
-
         <receiver
             android:name=".features.ReminderReceiver"
             android:enabled="true"
