@@ -24,10 +24,10 @@ class FollowersFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentFollowersBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -39,7 +39,7 @@ class FollowersFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        with(binding!!) {
+        binding?.apply {
             rvFollowers.layoutManager = LinearLayoutManager(activity)
             userAdapter = UserAdapter()
             rvFollowers.adapter = userAdapter
@@ -71,7 +71,7 @@ class FollowersFragment : Fragment() {
     }
 
     private fun setLoadingState(isDataLoading: Boolean) {
-        with(binding!!) {
+        binding?.apply {
             if (isDataLoading) {
                 loading.visible()
                 rvFollowers.invisible()

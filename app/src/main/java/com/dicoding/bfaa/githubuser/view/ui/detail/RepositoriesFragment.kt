@@ -25,10 +25,10 @@ class RepositoriesFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentRepositoriesBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -40,7 +40,7 @@ class RepositoriesFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        with(binding!!) {
+        binding?.apply {
             rvRepositories.layoutManager = LinearLayoutManager(activity)
             repositoryAdapter = RepositoryAdapter()
             rvRepositories.adapter = repositoryAdapter

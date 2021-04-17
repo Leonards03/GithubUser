@@ -28,11 +28,11 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         setHasOptionsMenu(true)
         binding = FragmentHomeBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,7 +44,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        with(binding!!) {
+        binding?.apply {
             rvUsers.layoutManager = LinearLayoutManager(activity)
             userAdapter = UserAdapter()
             rvUsers.adapter = userAdapter
@@ -79,7 +79,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun setLoadingState(isDataLoading: Boolean) {
-        with(binding!!) {
+        binding?.apply {
             if (isDataLoading) {
                 emptyState.invisible()
                 loading.visible()

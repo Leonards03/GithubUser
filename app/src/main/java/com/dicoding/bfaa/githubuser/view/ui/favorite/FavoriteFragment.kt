@@ -27,10 +27,10 @@ class FavoriteFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         // Inflate the layout for this fragment
         binding = FragmentFavoriteBinding.inflate(inflater, container, false)
-        return binding!!.root
+        return binding?.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,7 +43,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupRecyclerView() {
-        with(binding!!) {
+        binding?.apply {
             rvUsers.layoutManager = LinearLayoutManager(activity)
             userAdapter = UserAdapter()
             rvUsers.adapter = userAdapter
@@ -77,12 +77,12 @@ class FavoriteFragment : Fragment() {
 
     private fun showEmptyState() {
         if (userAdapter.itemCount == 0) {
-            binding!!.emptyState.visible()
+            binding?.emptyState?.visible()
         }
     }
 
     private fun setLoadingState(isDataLoading: Boolean) {
-        with(binding!!) {
+        binding?.apply {
             if (isDataLoading) {
                 loading.visible()
                 rvUsers.invisible()
