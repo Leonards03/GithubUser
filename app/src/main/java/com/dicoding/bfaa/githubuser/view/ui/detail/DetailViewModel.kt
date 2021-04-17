@@ -165,16 +165,16 @@ class DetailViewModel @Inject constructor(
         val following = userFollowing.value?.data!!
         val repos = userRepositories.value?.data!!
 
-        viewModelScope.launch {
-            mainRepository.favoriteUser(user, followers, following, repos)
+        viewModelScope.launch(ioDispatcher) {
+            mainRepository.addUserToFavorite(user, followers, following, repos)
         }
     }
 
     fun removeUserFromFavorite() {
         val user = userDetails.value?.data!!
 
-        viewModelScope.launch {
-            mainRepository.unfavorite(user)
+        viewModelScope.launch(ioDispatcher) {
+            mainRepository.removeUserFromFavorite(user)
         }
     }
 }

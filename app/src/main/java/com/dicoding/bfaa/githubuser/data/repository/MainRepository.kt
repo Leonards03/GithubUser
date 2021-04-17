@@ -47,10 +47,14 @@ class MainRepository @Inject constructor(
         return userMapper.mapFromEntities(entities)
     }
 
+    fun getFavoriteCursor() = localDataSource.getFavoriteCursor()
+
     suspend fun getUser(username: String): User {
         val user = localDataSource.getUser(username)
         return userMapper.mapFromEntity(user)
     }
+
+    fun getUserCursor(username: String) = localDataSource.getUserCursor(username)
 
     suspend fun getFollowersByUsername(username: String): List<User> {
         val followersEntity = localDataSource.getFollowersByUsername(username)
@@ -67,7 +71,7 @@ class MainRepository @Inject constructor(
         return repositoryMapper.mapFromEntities(repositoriesEntity)
     }
 
-    suspend fun favoriteUser(
+    suspend fun addUserToFavorite(
         user: User,
         followers: List<User>,
         following: List<User>,
@@ -94,8 +98,8 @@ class MainRepository @Inject constructor(
         }
     }
 
-    suspend fun unfavorite(user: User) {
+    suspend fun removeUserFromFavorite(user: User) {
         val userEntity = userMapper.mapToEntity(user)
-        localDataSource.unfavoriteUser(userEntity)
+        localDataSource.removeUserFromFavorite(userEntity)
     }
 }

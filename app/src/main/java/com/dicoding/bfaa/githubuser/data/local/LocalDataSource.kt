@@ -14,11 +14,15 @@ class LocalDataSource(
 
     suspend fun getFavoriteList() = userDao.getFavoriteList()
 
+    fun getFavoriteCursor() = userDao.getFavoriteCursor()
+
     suspend fun getUser(username: String) = userDao.getUser(username)
+
+    fun getUserCursor(username: String) = userDao.getUserCursor(username)
 
     suspend fun favoriteUser(user: UserEntity) = userDao.insertUser(user)
 
-    suspend fun unfavoriteUser(user: UserEntity) = userDao.removeUser(user)
+    suspend fun removeUserFromFavorite(user: UserEntity) = userDao.removeUser(user)
 
     suspend fun getFollowersByUsername(username: String) =
         userDao.getFollowers(username)
