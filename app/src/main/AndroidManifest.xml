@@ -3,6 +3,10 @@
     package="com.dicoding.bfaa.githubuser">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <permission android:name="com.dicoding.bfaa.githubuser.READ_DATABASE"
+        android:protectionLevel="normal"/>
+    <permission android:name="com.dicoding.bfaa.githubuser.WRITE_DATABASE"
+        android:protectionLevel="normal"/>
 
     <application
         android:name=".BaseApplication"
@@ -16,7 +20,9 @@
             android:name=".data.local.provider.FavoriteUserContentProvider"
             android:authorities="com.dicoding.bfaa.githubuser"
             android:enabled="true"
-            android:exported="true"></provider>
+            android:exported="true"
+            android:readPermission="com.dicoding.bfaa.githubuser.READ_DATABASE"
+            android:writePermission="com.dicoding.bfaa.githubuser.WRITE_DATABASE"/>
 
         <receiver android:name=".widget.FavoriteUserWidget">
             <intent-filter>
