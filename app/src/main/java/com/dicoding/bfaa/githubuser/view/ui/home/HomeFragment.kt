@@ -106,10 +106,29 @@ class HomeFragment : Fragment() {
                     return true
                 }
 
-                override fun onQueryTextChange(newText: String?): Boolean = false
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    newText?.let {
+                        if(it.isBlank() || it.isEmpty()){
+                            clearResult()
+                        }
+                    }
+                    return true
+                }
             })
+            setOnCloseListener {
+                clearResult()
+                true
+            }
         }
         super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    private fun clearResult(){
+        userAdapter.clearList()
+        binding?.apply {
+            rvUsers.invisible()
+            emptyState.visible()
+        }
     }
 
     override fun onDestroyView() {
