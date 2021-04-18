@@ -1,5 +1,6 @@
 package com.dicoding.bfaa.githubuser.view.ui.detail
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,69 +17,71 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-    private val mainRepository: MainRepository,
+    private val repository: MainRepository,
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    var loadFromNetwork: Boolean = true
+    private var _isFavorite: Boolean? = null
+    val isFavorite get() = _isFavorite!!
 
-    private val username = MutableLiveData<String>()
+    fun setFavoriteState(isFavorite: Boolean){
+        _isFavorite = isFavorite
+    }
 
     fun setUsername(username: String) {
-        this.username.value = username
         viewModelScope.launch {
-            getUserDetails()
-            getUserFollowers()
-            getUserFollowing()
-            getUserRepositories()
+            getUserDetails(username)
+            getUserRepositories(username)
+            getUserFollowers(username)
+            getUserFollowing(username)
         }
     }
 
     private val _userDetails: MutableLiveData<Resource<User>> = MutableLiveData()
-    private suspend fun getUserDetails() = withContext(ioDispatcher) {
+    private suspend fun getUserDetails(username: String) = withContext(ioDispatcher) {
         _userDetails.postValue(Resource.loading(null))
         try {
-            username.value?.let {
-                if (loadFromNetwork) {
-                    _userDetails.postValue(Resource.success(mainRepository.fetchUser(it)))
-                } else {
-                    _userDetails.postValue(Resource.success(mainRepository.getUser(it)))
-                }
-            }
+            if (isFavorite)
+                _userDetails.postValue(
+                    Resource.success(
+                        repository.getUser(username)
+                    )
+                )
+            else
+                _userDetails.postValue(
+                    Resource.success(
+                        repository.fetchUser(username)
+                    )
+                )
         } catch (exception: Exception) {
             _userDetails.postValue(
                 Resource.error(
                     null,
-                    message = exception.message ?: "Error occured"
+                    message = exception.message ?: "Error occured: ${exception}"
                 )
             )
         }
     }
 
-    val userDetails get() = _userDetails
+    val userDetails get(): LiveData<Resource<User>> = _userDetails
 
     private val _userFollowers: MutableLiveData<Resource<List<User>>> = MutableLiveData()
-    private suspend fun getUserFollowers() = withContext(ioDispatcher) {
+    private suspend fun getUserFollowers(username: String) = withContext(ioDispatcher) {
         _userFollowers.postValue(Resource.loading(null))
         try {
-            username.value?.let {
-                if (loadFromNetwork)
-                    _userFollowers.postValue(
-                        Resource.success(
-                            mainRepository.fetchFollowersByUsername(
-                                it
-                            )
-                        )
+            if (isFavorite)
+                _userFollowers.postValue(
+                    Resource.success(
+                        repository.getFollowersByUsername(username)
                     )
-                else
-                    _userFollowers.postValue(
-                        Resource.success(
-                            mainRepository.getFollowersByUsername(
-                                it
-                            )
-                        )
+                )
+            else
+                _userFollowers.postValue(
+                    Resource.success(
+                        repository.fetchFollowersByUsername(username)
                     )
-            }
+                )
+
         } catch (exception: Exception) {
             _userFollowers.postValue(
                 Resource.error(
@@ -89,30 +92,24 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    val userFollowers get() = _userFollowers
+    val userFollowers get(): LiveData<Resource<List<User>>> = _userFollowers
 
     private val _userFollowing: MutableLiveData<Resource<List<User>>> = MutableLiveData()
-    private suspend fun getUserFollowing() = withContext(ioDispatcher) {
+    private suspend fun getUserFollowing(username: String) = withContext(ioDispatcher) {
         _userFollowing.postValue(Resource.loading(null))
         try {
-            username.value?.let {
-                if (loadFromNetwork)
-                    _userFollowing.postValue(
-                        Resource.success(
-                            mainRepository.fetchFollowingByUsername(
-                                it
-                            )
-                        )
+            if (isFavorite)
+                _userFollowing.postValue(
+                    Resource.success(
+                        repository.getFollowingByUsername(username)
                     )
-                else
-                    _userFollowing.postValue(
-                        Resource.success(
-                            mainRepository.getFollowingByUsername(
-                                it
-                            )
-                        )
+                )
+            else
+                _userFollowing.postValue(
+                    Resource.success(
+                        repository.fetchFollowingByUsername(username)
                     )
-            }
+                )
         } catch (exception: Exception) {
             _userFollowing.postValue(
                 Resource.error(
@@ -123,30 +120,25 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    val userFollowing get() = _userFollowing
+    val userFollowing get(): LiveData<Resource<List<User>>> = _userFollowing
 
     private val _userRepositories: MutableLiveData<Resource<List<Repository>>> = MutableLiveData()
-    private suspend fun getUserRepositories() = withContext(ioDispatcher) {
+    private suspend fun getUserRepositories(username: String) = withContext(ioDispatcher) {
         _userRepositories.postValue(Resource.loading(null))
         try {
-            username.value?.let {
-                if (loadFromNetwork)
-                    _userRepositories.postValue(
-                        Resource.success(
-                            mainRepository.fetchRepositoriesByUsername(
-                                it
-                            )
-                        )
+            if (isFavorite)
+                _userRepositories.postValue(
+                    Resource.success(
+                        repository.getRepositoriesByUsername(username)
                     )
-                else
-                    _userRepositories.postValue(
-                        Resource.success(
-                            mainRepository.getRepositoriesByUsername(
-                                it
-                            )
-                        )
+                )
+            else
+                _userRepositories.postValue(
+                    Resource.success(
+                        repository.fetchRepositoriesByUsername(username)
                     )
-            }
+                )
+
         } catch (exception: Exception) {
             _userRepositories.postValue(
                 Resource.error(
@@ -157,7 +149,7 @@ class DetailViewModel @Inject constructor(
         }
     }
 
-    val userRepositories get() = _userRepositories
+    val userRepositories get(): LiveData<Resource<List<Repository>>> = _userRepositories
 
     fun addUserToFavorite() {
         val user = userDetails.value?.data!!
@@ -166,7 +158,7 @@ class DetailViewModel @Inject constructor(
         val repos = userRepositories.value?.data!!
 
         viewModelScope.launch(ioDispatcher) {
-            mainRepository.addUserToFavorite(user, followers, following, repos)
+            repository.addUserToFavorite(user, followers, following, repos)
         }
     }
 
@@ -174,7 +166,7 @@ class DetailViewModel @Inject constructor(
         val user = userDetails.value?.data!!
 
         viewModelScope.launch(ioDispatcher) {
-            mainRepository.removeUserFromFavorite(user)
+            repository.removeUserFromFavorite(user)
         }
     }
 }
