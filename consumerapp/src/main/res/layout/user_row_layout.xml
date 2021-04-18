@@ -15,7 +15,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="@dimen/spacing_small">
-
         <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/img_photo"
             android:layout_width="56dp"
@@ -37,20 +36,21 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_tiny"
             app:layout_constraintTop_toBottomOf="@id/tv_name"
             app:layout_constraintStart_toEndOf="@id/img_photo"
             tools:text="Leonards03"/>
 
         <TextView
-            android:id="@+id/tv_bio"
+            style="@style/TextView.WithDrawable"
+            android:id="@+id/tv_work"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/spacing_normal"
-            android:layout_marginTop="@dimen/spacing_small"
+            android:layout_marginTop="@dimen/spacing_normal"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/img_photo"
             app:layout_constraintTop_toBottomOf="@id/tv_username"
-            tools:text="On the path to becoming a Google Android Associate Developer " />
+            tools:text="GoogleDev"
+            app:drawableStartCompat="@drawable/ic_work_16" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </com.google.android.material.card.MaterialCardView>

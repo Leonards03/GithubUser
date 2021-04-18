@@ -15,6 +15,15 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="Theme.GithubUser.NoActionBar" parent="Theme.GithubUser">
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+
+    <style name="Theme.GithubUser.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+    <style name="Theme.GithubUser.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
     <style name="TextView">
         <item name="android:layout_width">wrap_content</item>

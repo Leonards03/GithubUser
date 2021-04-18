@@ -1,30 +1,25 @@
 package com.dicoding.bfaa.consumerapp.data.mapper
 
-import com.dicoding.bfaa.consumerapp.data.local.entity.RepositoryEntity
+import android.database.Cursor
+import androidx.core.database.getStringOrNull
 import com.dicoding.bfaa.consumerapp.data.model.Repository
 
-class RepositoryMapper : ModelMapper<Repository, RepositoryEntity> {
-    override fun mapFromEntity(entity: RepositoryEntity): Repository =
-        Repository(
-            owner = entity.owner,
-            name = entity.name,
-            url = entity.url,
-            language = entity.language
-        )
+class RepositoryMapper : ModelMapper<Repository, Cursor> {
+    override fun mapFromEntity(entity: Cursor): Repository {
+        entity.apply {
+            val owner = getString(getColumnIndex("owner"))
+            val name = getString(getColumnIndex("name"))
+            val url = getString(getColumnIndex("url"))
+            val language = valueOrEmpty(getStringOrNull(getColumnIndex("language")))
+            return Repository(owner, name, url, language)
+        }
+    }
 
-    override fun mapToEntity(model: Repository): RepositoryEntity =
-        RepositoryEntity(
-            owner = model.owner,
-            name = model.name,
-            url = model.url,
-            language = model.language
-        )
+    override fun mapToEntity(model: Repository): Cursor {
+        TODO("Not yet implemented")
+    }
 
-    fun mapToEntities(repositories: List<Repository>): List<RepositoryEntity> =
-        repositories.map { repository -> mapToEntity(repository) }
-
-
-    fun mapFromEntities(entities: List<RepositoryEntity>): List<Repository> =
-        entities.map { entity -> mapFromEntity(entity) }
-
+    private fun valueOrEmpty(value: String?): String {
+        return value ?: String()
+    }
 }

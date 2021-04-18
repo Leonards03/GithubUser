@@ -25,6 +25,10 @@ object AppModule {
 
     @Singleton
     @Provides
+    fun provideLocalDataSource(): LocalDataSource = LocalDataSource()
+
+    @Singleton
+    @Provides
     fun provideUserMapper(): UserMapper = UserMapper()
 
     @Singleton

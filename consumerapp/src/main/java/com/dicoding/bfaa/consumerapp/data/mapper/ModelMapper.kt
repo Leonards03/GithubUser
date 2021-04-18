@@ -1,8 +1,8 @@
 package com.dicoding.bfaa.consumerapp.data.mapper
 
-interface ModelMapper<Model, Entity> {
+interface ModelMapper<Model, Cursor> {
 
-    fun mapFromEntity(entity: Entity) : Model
+    fun mapFromEntity(entity: Cursor) : Model
 
-    fun mapToEntity(model: Model) : Entity
+    fun mapToEntity(model: Model) : Cursor
 }

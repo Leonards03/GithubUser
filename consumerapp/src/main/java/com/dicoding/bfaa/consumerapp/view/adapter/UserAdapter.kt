@@ -1,6 +1,5 @@
 package com.dicoding.bfaa.consumerapp.view.adapter
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,8 +11,13 @@ import com.dicoding.bfaa.consumerapp.databinding.UserRowLayoutBinding
 import com.dicoding.bfaa.consumerapp.extensions.invisible
 import com.dicoding.bfaa.consumerapp.extensions.visible
 
-class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
+class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
     private val userList = ArrayList<User>()
+    private var onItemClickCallback: OnItemClickCallback? = null
+
+    fun setOnItemClickCallback(onItemClickCallback: OnItemClickCallback){
+        this.onItemClickCallback = onItemClickCallback
+    }
 
     fun setUsers(list: List<User>) {
         with(userList) {
@@ -40,7 +44,7 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
             UserRowLayoutBinding.bind(itemView)
         }
 
-        fun bind(user: User){
+        fun bind(user: User) {
             binding.apply {
                 Glide
                     .with(itemView.context)
@@ -49,14 +53,22 @@ class UserAdapter: RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
 
                 tvName.text = user.name
                 tvUsername.text = user.username
-                tvBio.apply {
+                tvWork.apply {
                     text = user.company
                     if (text.isNullOrEmpty())
                         invisible()
                     else
                         visible()
                 }
+
+                itemView.setOnClickListener {
+                    onItemClickCallback?.onItemClicked(user)
+                }
             }
         }
+    }
+
+    interface OnItemClickCallback {
+        fun onItemClicked(user: User)
     }
 }

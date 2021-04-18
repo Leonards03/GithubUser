@@ -43,8 +43,14 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
-    // KTX Core
-    implementation 'androidx.core:core-ktx:1.3.2'
+    // KTX
+    def activity_version = "1.2.2"
+    def fragment_version = "1.3.2"
+    implementation "androidx.core:core-ktx:$ktxcore_version"
+    implementation "androidx.activity:activity-ktx:$activity_version"
+    implementation "androidx.fragment:fragment-ktx:$fragment_version"
+    implementation "androidx.navigation:navigation-fragment-ktx:$navigation_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$navigation_version"
 
     // Circle Image View
     implementation "de.hdodenhof:circleimageview:$circleimageview_version"
@@ -57,10 +63,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     kapt "com.github.bumptech.glide:compiler:$glide_version"
 
-
-    def activity_version = "1.2.2"
-    implementation "androidx.activity:activity-ktx:$activity_version"
-
     // Hilt Dagger
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-compiler:$hilt_version"
@@ -70,12 +72,6 @@ dependencies {
 
     // LiveData KTX
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
-
-    // Room
-    implementation "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version"
-    implementation "androidx.room:room-ktx:$room_version"
-
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
