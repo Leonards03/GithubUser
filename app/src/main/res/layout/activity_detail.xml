@@ -9,7 +9,7 @@
         android:id="@+id/appBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:theme="@style/Theme.NavigationDrawer.AppBarOverlay">
+        android:theme="@style/Theme.GithubUser.AppBarOverlay">
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
@@ -18,7 +18,7 @@
             android:layout_height="?attr/actionBarSize"
             android:theme="@style/ThemeOverlay.MaterialComponents.Toolbar.Primary"
             app:menu="@menu/detail_menu"
-            app:popupTheme="@style/Theme.NavigationDrawer.PopupOverlay"
+            app:popupTheme="@style/Theme.GithubUser.PopupOverlay"
             app:title="@string/title_detail" />
 
         <com.google.android.material.circularreveal.cardview.CircularRevealCardView
@@ -67,7 +67,6 @@
                 <TextView
                     android:id="@+id/tv_username"
                     style="@style/TextView.Subtitle"
-                    android:layout_marginTop="@dimen/spacing_tiny"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tv_name"
                     tools:text="Leonards03" />
@@ -78,17 +77,30 @@
                     android:layout_marginTop="@dimen/spacing_small"
                     app:drawableStartCompat="@drawable/ic_work_16"
                     app:layout_constraintStart_toStartOf="parent"
+                    android:paddingEnd="@dimen/spacing_normal"
                     app:layout_constraintTop_toBottomOf="@id/tv_username"
-                    tools:text="Company" />
+                    tools:text="Company"
+                    tools:ignore="RtlSymmetry" />
 
                 <TextView
                     android:id="@+id/tv_location"
                     style="@style/TextView.WithDrawable"
-                    android:layout_marginTop="@dimen/spacing_small"
                     app:drawableStartCompat="@drawable/ic_room_16"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/tv_company"
+                    android:layout_marginTop="@dimen/spacing_small"
+                    app:layout_constraintStart_toEndOf="@id/tv_company"
+                    app:layout_constraintTop_toBottomOf="@id/tv_username"
                     tools:text="Jakarta, Indonesia" />
+
+                <TextView
+                    android:id="@+id/tv_bio"
+                    style="@style/TextView.Subtitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/spacing_larger"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/img_profile"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    tools:text="An Android Enthusiast"/>
             </androidx.constraintlayout.widget.ConstraintLayout>
         </com.google.android.material.circularreveal.cardview.CircularRevealCardView>
 
@@ -132,6 +144,7 @@
         android:layout_marginStart="@dimen/spacing_small"
         android:layout_marginEnd="@dimen/spacing_small"
         android:text="@string/favorite"
+        android:enabled="false"
         app:layout_behavior="@string/bottom_sheet_behavior" />
 
 </com.google.android.material.circularreveal.coordinatorlayout.CircularRevealCoordinatorLayout>
