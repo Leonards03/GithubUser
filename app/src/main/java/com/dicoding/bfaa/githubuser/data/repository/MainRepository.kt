@@ -1,5 +1,6 @@
 package com.dicoding.bfaa.githubuser.data.repository
 
+import android.database.Cursor
 import com.dicoding.bfaa.githubuser.data.local.LocalDataSource
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowersEntity
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowingEntity
@@ -61,15 +62,21 @@ class MainRepository @Inject constructor(
         return userMapper.mapFromFollowersEntities(followersEntity)
     }
 
+    fun getFollowersCursor(username: String): Cursor = localDataSource.getFollowersCursor(username)
+
     suspend fun getFollowingByUsername(username: String): List<User> {
         val followingEntity = localDataSource.getFollowingByUsername(username)
         return userMapper.mapFromFollowingEntities(followingEntity)
     }
 
+    fun getFollowingCursor(username: String): Cursor = localDataSource.getFollowingCursor(username)
+
     suspend fun getRepositoriesByUsername(username: String): List<Repository> {
         val repositoriesEntity = localDataSource.getRepositoriesByUsername(username)
         return repositoryMapper.mapFromEntities(repositoriesEntity)
     }
+
+    fun getRepositoriesCursor(username: String) = localDataSource.getRepositoriesCursor(username)
 
     suspend fun addUserToFavorite(
         user: User,
@@ -102,4 +109,6 @@ class MainRepository @Inject constructor(
         val userEntity = userMapper.mapToEntity(user)
         localDataSource.removeUserFromFavorite(userEntity)
     }
+
+    fun removeUserFromFavorite(username: String) = localDataSource.removeUserFromFavorite(username)
 }
