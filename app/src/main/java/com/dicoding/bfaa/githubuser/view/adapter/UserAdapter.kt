@@ -25,6 +25,11 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         notifyDataSetChanged()
     }
 
+    fun clearList(){
+        userList.clear()
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.item_row_layout, parent, false)
@@ -35,7 +40,7 @@ class UserAdapter : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
         holder.bind(userList[position])
     }
 
-    override fun getItemCount(): Int = userList.size
+    override fun getItemCount(): Int = userList.count()
 
     inner class UserViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val binding by lazy {
