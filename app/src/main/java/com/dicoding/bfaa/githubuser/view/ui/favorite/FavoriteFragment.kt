@@ -38,7 +38,6 @@ class FavoriteFragment : Fragment() {
         if (activity != null) {
             setupRecyclerView()
             setupObservers()
-            showEmptyState()
         }
     }
 
@@ -52,7 +51,7 @@ class FavoriteFragment : Fragment() {
                 override fun onItemClicked(username: String) {
                     Intent(requireActivity(), DetailActivity::class.java).apply {
                         putExtra(DetailActivity.EXTRA_USERNAME, username)
-                        putExtra(DetailActivity.FROM_NETWORK, false)
+                        putExtra(DetailActivity.IS_FAVORITE, true)
                         startActivity(this)
                     }
                 }
@@ -67,6 +66,7 @@ class FavoriteFragment : Fragment() {
                     resource.data?.let { result ->
                         setLoadingState(false)
                         userAdapter.setUsers(result)
+                        showEmptyState()
                     }
                 }
                 Status.LOADING -> setLoadingState(true)
@@ -76,6 +76,7 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun showEmptyState() {
+        Log.d(TAG, userAdapter.itemCount.toString())
         if (userAdapter.itemCount == 0) {
             binding?.emptyState?.visible()
         }
@@ -96,6 +97,11 @@ class FavoriteFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        userAdapter.notifyDataSetChanged()
     }
 
     companion object {
