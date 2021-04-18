@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.bfaa.githubuser.databinding.FragmentFollowingBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
-import com.dicoding.bfaa.githubuser.utils.Status
+import com.dicoding.bfaa.githubuser.utils.Status.*
 import com.dicoding.bfaa.githubuser.view.adapter.UserAdapter
 
 class FollowingFragment : Fragment() {
@@ -58,16 +58,16 @@ class FollowingFragment : Fragment() {
     private fun setupObservers() {
         detailViewModel.userFollowing.observe(requireActivity(), { resource ->
             when (resource.status) {
-                Status.SUCCESS -> {
+                SUCCESS -> {
                     setLoadingState(false)
                     resource.data?.let { result ->
                         userAdapter.setUsers(result)
                     }
                 }
-                Status.LOADING -> {
+                LOADING -> {
                     setLoadingState(true)
                 }
-                Status.ERROR -> {
+                ERROR -> {
                     Log.e(TAG, resource.message.toString())
                 }
             }
