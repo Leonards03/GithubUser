@@ -31,6 +31,7 @@ class DetailActivity : AppCompatActivity() {
     private val args: DetailActivityArgs by navArgs()
 
     private var username: String? = null
+    private var isFavorite: Boolean = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,13 +39,12 @@ class DetailActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         prepareTabLayout()
 
-        val fromNetwork = intent.getBooleanExtra(FROM_NETWORK, true)
-        detailViewModel.loadFromNetwork = fromNetwork
-
+        isFavorite = intent.getBooleanExtra(IS_FAVORITE, false)
+        detailViewModel.setFavoriteState(isFavorite)
+        setupFavoriteButton(isFavorite)
         username = getFromIntentOrNavArgs()
         username?.let {
             setActionBarTitle(it)
-            setupFavoriteButton(fromNetwork)
             setupObservers(it)
         }
     }
@@ -59,14 +59,6 @@ class DetailActivity : AppCompatActivity() {
             tvFollowing.text = getString(R.string.following, user.followingCount.toString())
             tvName.text = user.name
             tvUsername.text = user.username
-
-            tvLocation.apply {
-                text = user.username
-                if (text.isNullOrEmpty())
-                    invisible()
-                else
-                    visible()
-            }
 
             tvCompany.apply {
                 text = user.company
@@ -84,16 +76,27 @@ class DetailActivity : AppCompatActivity() {
                     visible()
             }
 
+            tvBio.apply {
+                text = user.bio
+                if (text.isNullOrEmpty())
+                    invisible()
+                else
+                    visible()
+            }
+
             Glide
                 .with(this@DetailActivity)
                 .load(user.avatar)
                 .fitCenter()
                 .into(imgProfile)
 
+            btnFavorite.setOnClickListener {
+                onFavoriteButtonClick()
+            }
+
             BottomSheetBehavior.from(btnFavorite).apply {
                 state = BottomSheetBehavior.STATE_COLLAPSED
             }
-
         }
     }
 
@@ -102,6 +105,7 @@ class DetailActivity : AppCompatActivity() {
         detailViewModel.userDetails.observe(this, { resource ->
             when (resource.status) {
                 SUCCESS -> {
+                    binding.btnFavorite.isEnabled = true
                     resource.data?.let { result ->
                         bind(result)
                     }
@@ -110,40 +114,34 @@ class DetailActivity : AppCompatActivity() {
                 }
                 ERROR -> Log.e(TAG, resource.message.toString())
             }
-
         })
     }
 
-    private fun setupFavoriteButton(loadFromNetwork: Boolean) {
-        if (loadFromNetwork) {
-            binding.apply {
-                btnFavorite.text = getString(R.string.add_to_favorites)
-                btnFavorite.setOnClickListener {
-                    detailViewModel.addUserToFavorite()
-                    val text = getString(R.string.message_favorite, username)
-                    Snackbar.make(
-                        this@DetailActivity,
-                        btnFavorite,
-                        text,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-            }
+    private fun setupFavoriteButton(isFavorite: Boolean) {
+        binding.btnFavorite.text = if (!isFavorite)
+            getString(R.string.add_to_favorites)
+        else
+            getString(R.string.remove_from_favorites)
+    }
+
+    private fun onFavoriteButtonClick() {
+        val text = if (isFavorite) {
+            /*
+             if the present state is favorite,
+             then the action on the button is remove present user from DB
+             */
+            detailViewModel.removeUserFromFavorite()
+            getString(R.string.message_remove_favorite, username)
         } else {
-            binding.apply {
-                btnFavorite.text = getString(R.string.remove_from_favorites)
-                btnFavorite.setOnClickListener {
-                    detailViewModel.removeUserFromFavorite()
-                    val text = getString(R.string.message_remove_favorite, username)
-                    Snackbar.make(
-                        this@DetailActivity,
-                        btnFavorite,
-                        text,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-            }
+            /*
+            else, the button will show up as add user to favorite
+             */
+            detailViewModel.addUserToFavorite()
+            getString(R.string.message_favorite, username)
         }
+        Snackbar.make(this, binding.btnFavorite, text, Snackbar.LENGTH_SHORT).show()
+        isFavorite = !isFavorite
+        setupFavoriteButton(isFavorite)
     }
 
     private fun prepareTabLayout() {
@@ -190,7 +188,7 @@ class DetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_USERNAME = "extra_username"
-        const val FROM_NETWORK = "load_state"
+        const val IS_FAVORITE = "favorite_state"
 
         @StringRes
         private val TAB_TITLES = intArrayOf(
