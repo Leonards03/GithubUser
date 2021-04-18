@@ -62,6 +62,7 @@ class FollowersFragment : Fragment() {
                     setLoadingState(false)
                     resource.data?.let { result ->
                         userAdapter.setUsers(result)
+                        Log.d(TAG, result.toString())
                     }
                 }
                 Status.LOADING -> setLoadingState(true)
