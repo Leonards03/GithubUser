@@ -5,32 +5,42 @@ import android.content.ContentValues
 import android.content.UriMatcher
 import android.database.Cursor
 import android.net.Uri
-import android.provider.ContactsContract.CommonDataKinds.Note.NOTE
+import android.util.Log
 import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.AUTHORITY
-import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.TABLE_NAME
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.CONTENT_URI
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.FOLLOWERS_TABLE
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.FOLLOWING_TABLE
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.REPOSITORY_TABLE
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.USERS_TABLE
 import com.dicoding.bfaa.githubuser.data.repository.MainRepository
+import dagger.hilt.EntryPoint
+import dagger.hilt.InstallIn
+import dagger.hilt.android.EntryPointAccessors
+import dagger.hilt.components.SingletonComponent
 import javax.inject.Inject
 
-class FavoriteUserContentProvider @Inject constructor(
-    private val repository: MainRepository
-) : ContentProvider() {
-
-    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
-        TODO("Implement this to handle requests to delete one or more rows")
+class FavoriteUserContentProvider @Inject constructor() : ContentProvider() {
+    @EntryPoint
+    @InstallIn(SingletonComponent::class)
+    interface ContentProviderEntryPoint {
+        fun repository(): MainRepository
     }
 
-    override fun getType(uri: Uri): String? {
-        TODO(
-            "Implement this to handle requests for the MIME type of the data" +
-                    "at the given URI"
-        )
-    }
-
-    override fun insert(uri: Uri, values: ContentValues?): Uri? {
-        TODO("Implement this to handle requests to insert a new row.")
-    }
+    private lateinit var repository: MainRepository
 
     override fun onCreate(): Boolean {
+        try {
+            val appContext = context?.applicationContext ?: throw IllegalStateException()
+            val hiltEntryPoint =
+                EntryPointAccessors.fromApplication(
+                    appContext,
+                    ContentProviderEntryPoint::class.java
+                )
+            repository = hiltEntryPoint.repository()
+            Log.d(TAG, "Content Provider Created ")
+        } catch (exception: Exception) {
+            Log.e(TAG, exception.message ?: "Error occured $exception")
+        }
         return true
     }
 
@@ -38,31 +48,69 @@ class FavoriteUserContentProvider @Inject constructor(
         uri: Uri, projection: Array<String>?, selection: String?,
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
-        return when(uriMatcher.match(uri)){
+        val username = uri.lastPathSegment ?: String()
+        Log.d("ContentProvider", "Query function start, $username, $uri")
+        return when (uriMatcher.match(uri)) {
             USER -> repository.getFavoriteCursor()
-            USER_ID -> repository.getUserCursor(uri.lastPathSegment!!)
-            else -> null
+            USER_ID -> repository.getUserCursor(username)
+            FOLLOWERS -> repository.getFollowersCursor(username)
+            FOLLOWING -> repository.getFollowingCursor(username)
+            REPOSITORY -> repository.getRepositoriesCursor(username)
+            else -> {
+                Log.e("ContentProvider", "No matches")
+                null
+            }
         }
+    }
+
+    override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int {
+        val username = uri.lastPathSegment ?: String()
+        val deleted: Int = when(USER_ID){
+            uriMatcher.match(uri) -> repository.removeUserFromFavorite(username)
+            else -> 0
+        }
+
+        context?.contentResolver?.notifyChange(CONTENT_URI, null)
+
+        return deleted
     }
 
     override fun update(
         uri: Uri, values: ContentValues?, selection: String?,
         selectionArgs: Array<String>?
-    ): Int {
-        TODO("Implement this to handle requests to update one or more rows.")
-    }
+    ): Int = -1
+
+    override fun insert(uri: Uri, values: ContentValues?): Uri? = null
+
+    override fun getType(uri: Uri): String? = null
 
     companion object {
         private const val USER = 1
         private const val USER_ID = 2
+        private const val FOLLOWERS = 3
+        private const val FOLLOWING = 4
+        private const val REPOSITORY = 5
         private val uriMatcher = UriMatcher(UriMatcher.NO_MATCH)
 
         init {
-            // content://com.dicoding.picodiploma.mynotesapp/note
-            uriMatcher.addURI(AUTHORITY, TABLE_NAME, USER)
-            // content://com.dicoding.picodiploma.mynotesapp/note/id
-            uriMatcher.addURI(AUTHORITY, "$TABLE_NAME/#", USER_ID)
+            uriMatcher.apply {
+                // content://com.dicoding.bfaa.githubuser/users
+                addURI(AUTHORITY, USERS_TABLE, USER)
+
+                // content://com.dicoding.bfaa.githubuser/users/username
+                addURI(AUTHORITY, "$USERS_TABLE/*", USER_ID)
+
+                // content://com.dicoding.bfaa.githubuser/followers/username
+                addURI(AUTHORITY, "$FOLLOWERS_TABLE/*", FOLLOWERS)
+
+                // content://com.dicoding.bfaa.githubuser/following/username
+                addURI(AUTHORITY, "$FOLLOWING_TABLE/*", FOLLOWING)
+
+                // content://com.dicoding.bfaa.githubuser/repositories/username
+                addURI(AUTHORITY, "$REPOSITORY_TABLE/*", REPOSITORY)
+            }
         }
 
+        private val TAG = FavoriteUserContentProvider::class.simpleName
     }
 }
