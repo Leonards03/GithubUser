@@ -14,6 +14,7 @@
     <dimen name="spacing_normal">12dp</dimen>
     <dimen name="spacing_wide">16dp</dimen>
     <dimen name="spacing_large">24dp</dimen>
+    <dimen name="spacing_larger">32dp</dimen>
     <dimen name="spacing_huge">40dp</dimen>
 
     <!-- corner/elevation radius -->
