@@ -49,7 +49,6 @@ class FavoriteUserContentProvider @Inject constructor() : ContentProvider() {
         selectionArgs: Array<String>?, sortOrder: String?
     ): Cursor? {
         val username = uri.lastPathSegment ?: String()
-        Log.d("ContentProvider", "Query function start, $username, $uri")
         return when (uriMatcher.match(uri)) {
             USER -> repository.getFavoriteCursor()
             USER_ID -> repository.getUserCursor(username)
