@@ -49,4 +49,7 @@
     <string name="nav_favorite">Favorite User</string>
     <string name="label_empty">Tidak ada apa-apa disini</string>
     <string name="description_empty">Cari user yang kamu sukai dan tambahkan mereka ke list favorit mu!</string>
+    <string name="favorite_user">Pengguna Favorit</string>
+    <string name="no_favorite_user_found">Tidak ada pengguna favorit</string>
+    <string name="favorite_user_profile_picture">Gambar profil pengguna favorit</string>
 </resources>

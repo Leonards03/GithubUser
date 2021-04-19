@@ -48,4 +48,7 @@
     <string name="nav_favorite">Favorite User</string>
     <string name="label_empty">There is no one here</string>
     <string name="description_empty">Go find some user that you might like,\n and add them to favorite!</string>
+    <string name="favorite_user">Favorite User</string>
+    <string name="no_favorite_user_found">No Favorite User found</string>
+    <string name="favorite_user_profile_picture">Favorite user profile picture</string>
 </resources>
