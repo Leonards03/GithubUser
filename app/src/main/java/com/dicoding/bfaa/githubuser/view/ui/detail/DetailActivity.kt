@@ -12,6 +12,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.dicoding.bfaa.githubuser.R
+import com.dicoding.bfaa.githubuser.data.local.GithubDatabase.Companion.CONTENT_URI
 import com.dicoding.bfaa.githubuser.data.model.User
 import com.dicoding.bfaa.githubuser.databinding.ActivityDetailBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
@@ -145,7 +146,8 @@ class DetailActivity : AppCompatActivity() {
                  */
                 detailViewModel.removeUserFromFavorite()
                 lifecycleScope.launch {
-                    delay(2000L)
+                    contentResolver.notifyChange(CONTENT_URI,null)
+                    delay(1000L)
                     onBackPressed()
                 }
                 binding.btnFavorite.isEnabled = false
