@@ -1,5 +1,6 @@
 package com.dicoding.bfaa.githubuser.data.mapper
 
+import android.database.Cursor
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowersEntity
 import com.dicoding.bfaa.githubuser.data.local.entity.FollowingEntity
 import com.dicoding.bfaa.githubuser.data.local.entity.UserEntity
@@ -81,6 +82,32 @@ class UserMapper : ModelMapper<UserResponse, User, UserEntity> {
 
     fun mapFromEntities(entities: List<UserEntity>): List<User> =
         entities.map { entity -> mapFromEntity(entity) }
+
+    fun mapToModel(cursor: Cursor): User{
+        cursor.apply {
+            return User(
+                getString(getColumnIndex("username")),
+                getString(getColumnIndex("name")),
+                getString(getColumnIndex("bio")),
+                getString(getColumnIndex("avatar")),
+                getString(getColumnIndex("location")),
+                getString(getColumnIndex("company")),
+                getInt(getColumnIndex("followers_count")),
+                getInt(getColumnIndex("following_count"))
+            )
+        }
+    }
+
+    fun mapToModels(cursor: Cursor): List<User>{
+        val userList = ArrayList<User>()
+        cursor.apply {
+            while (moveToNext())
+                userList.add(
+                    mapToModel(this)
+                )
+        }
+        return userList
+    }
 
     private fun valueOrEmpty(value: String?): String {
         return value ?: String()
