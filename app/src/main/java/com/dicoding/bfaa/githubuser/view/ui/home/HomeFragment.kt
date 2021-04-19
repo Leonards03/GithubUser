@@ -17,6 +17,7 @@ import com.dicoding.bfaa.githubuser.extensions.visible
 import com.dicoding.bfaa.githubuser.utils.Status
 import com.dicoding.bfaa.githubuser.view.adapter.UserAdapter
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.*
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
@@ -83,6 +84,7 @@ class HomeFragment : Fragment() {
             if (isDataLoading) {
                 emptyState.invisible()
                 loading.visible()
+                rvUsers.invisible()
             } else {
                 loading.invisible()
                 rvUsers.visible()
@@ -99,6 +101,9 @@ class HomeFragment : Fragment() {
             setSearchableInfo(searchManager?.getSearchableInfo(requireActivity().componentName))
             queryHint = resources.getString(R.string.hint_search)
             setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                private var searchJob: Job? = null
+                private val debouncedPeriod = 500L
+                private val coroutineScope = CoroutineScope(Dispatchers.Main)
                 override fun onQueryTextSubmit(query: String?): Boolean {
                     query?.let {
                         if (it.isNotEmpty()) viewModel.passQuery(it)
@@ -107,9 +112,15 @@ class HomeFragment : Fragment() {
                 }
 
                 override fun onQueryTextChange(newText: String?): Boolean {
-                    newText?.let {
-                        if(it.isBlank() || it.isEmpty()){
-                            clearResult()
+                    searchJob?.cancel()
+                    searchJob = coroutineScope.launch {
+                        newText?.let {
+                            if (it.isBlank() || it.isEmpty()) {
+                                clearResult()
+                            } else {
+                                delay(debouncedPeriod)
+                                viewModel.passQuery(it)
+                            }
                         }
                     }
                     return true
@@ -123,7 +134,7 @@ class HomeFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
     }
 
-    private fun clearResult(){
+    private fun clearResult() {
         userAdapter.clearList()
         binding?.apply {
             rvUsers.invisible()
