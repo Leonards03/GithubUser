@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.navArgs
 import com.bumptech.glide.Glide
 import com.dicoding.bfaa.githubuser.R
@@ -17,10 +18,14 @@ import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
 import com.dicoding.bfaa.githubuser.utils.Status.*
 import com.dicoding.bfaa.githubuser.view.adapter.DetailPagerAdapter
+import com.dicoding.bfaa.githubuser.widget.FavoriteUserAppWidget
+import com.dicoding.bfaa.githubuser.widget.FavoriteUserAppWidget.Companion.REFRESH_ACTION
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -30,27 +35,33 @@ class DetailActivity : AppCompatActivity() {
     private val detailViewModel: DetailViewModel by viewModels()
     private val args: DetailActivityArgs by navArgs()
 
-    private var username: String? = null
-    private var isFavorite: Boolean = false
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
         setSupportActionBar(binding.toolbar)
         prepareTabLayout()
 
-        isFavorite = intent.getBooleanExtra(IS_FAVORITE, false)
-        detailViewModel.setFavoriteState(isFavorite)
-        setupFavoriteButton(isFavorite)
-        username = getFromIntentOrNavArgs()
-        username?.let {
-            setActionBarTitle(it)
-            setupObservers(it)
+        try {
+            prepare(detailViewModel.isFavorite)
+        } catch (exception: Exception) {
+            prepare(
+                intent.getBooleanExtra(IS_FAVORITE, false)
+            )
         }
     }
 
     private fun getFromIntentOrNavArgs(): String {
         return intent.getStringExtra(EXTRA_USERNAME) ?: args.username
+    }
+
+    private fun prepare(isFavorite: Boolean) {
+        detailViewModel.setFavoriteState(isFavorite)
+        setupFavoriteButton(isFavorite)
+        val username = getFromIntentOrNavArgs()
+        username.let {
+            setActionBarTitle(it)
+            setupObservers(it)
+        }
     }
 
     private fun bind(user: User) {
@@ -90,6 +101,7 @@ class DetailActivity : AppCompatActivity() {
                 .fitCenter()
                 .into(imgProfile)
 
+            setupFavoriteButton(detailViewModel.isFavorite)
             btnFavorite.setOnClickListener {
                 onFavoriteButtonClick()
             }
@@ -118,30 +130,51 @@ class DetailActivity : AppCompatActivity() {
     }
 
     private fun setupFavoriteButton(isFavorite: Boolean) {
-        binding.btnFavorite.text = if (!isFavorite)
-            getString(R.string.add_to_favorites)
-        else
+        binding.btnFavorite.text = if (isFavorite)
             getString(R.string.remove_from_favorites)
+        else
+            getString(R.string.add_to_favorites)
     }
 
     private fun onFavoriteButtonClick() {
-        val text = if (isFavorite) {
-            /*
-             if the present state is favorite,
-             then the action on the button is remove present user from DB
-             */
-            detailViewModel.removeUserFromFavorite()
-            getString(R.string.message_remove_favorite, username)
-        } else {
-            /*
-            else, the button will show up as add user to favorite
-             */
-            detailViewModel.addUserToFavorite()
-            getString(R.string.message_favorite, username)
+        try {
+            val text = if (detailViewModel.isFavorite) {
+                /*
+                 if the present state is favorite,
+                 then the action on the button is remove present user from DB
+                 */
+                detailViewModel.removeUserFromFavorite()
+                lifecycleScope.launch {
+                    delay(2000L)
+                    onBackPressed()
+                }
+                binding.btnFavorite.isEnabled = false
+                getString(R.string.message_remove_favorite, detailViewModel.username)
+            } else {
+                /*
+                else, the button will show up as add user to favorite
+                 */
+                detailViewModel.addUserToFavorite()
+                getString(R.string.message_favorite, detailViewModel.username)
+            }
+            Snackbar.make(this, binding.btnFavorite, text, Snackbar.LENGTH_SHORT).show()
+            detailViewModel.toggleFavorite()
+            setupFavoriteButton(detailViewModel.isFavorite)
+
+            // Send Intent to refresh the widgets
+            Intent(this@DetailActivity, FavoriteUserAppWidget::class.java).apply {
+                action = REFRESH_ACTION
+                sendBroadcast(this)
+            }
+        } catch (exception: Exception) {
+            Snackbar.make(
+                this,
+                binding.btnFavorite,
+                getString(R.string.message_error),
+                Snackbar.LENGTH_SHORT
+            ).show()
+            Log.e(TAG, exception.message ?: exception.stackTraceToString())
         }
-        Snackbar.make(this, binding.btnFavorite, text, Snackbar.LENGTH_SHORT).show()
-        isFavorite = !isFavorite
-        setupFavoriteButton(isFavorite)
     }
 
     private fun prepareTabLayout() {
@@ -152,6 +185,7 @@ class DetailActivity : AppCompatActivity() {
             }.attach()
         }
     }
+
 
     private fun setActionBarTitle(title: String) {
         enableBackButton()
@@ -169,7 +203,10 @@ class DetailActivity : AppCompatActivity() {
             R.id.action_menu_share -> {
                 val sendIntent: Intent = Intent().apply {
                     action = Intent.ACTION_SEND
-                    putExtra(Intent.EXTRA_TEXT, getString(R.string.message_share, username))
+                    putExtra(
+                        Intent.EXTRA_TEXT,
+                        getString(R.string.message_share, detailViewModel.username)
+                    )
                     type = "text/plain"
                 }
 

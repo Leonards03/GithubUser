@@ -1,5 +1,6 @@
 package com.dicoding.bfaa.githubuser.view.ui.detail
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,14 +22,26 @@ class DetailViewModel @Inject constructor(
     @IoDispatcher
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
-    private var _isFavorite: Boolean? = null
-    val isFavorite get() = _isFavorite!!
+    private var _isFavorite: MutableLiveData<Boolean> = MutableLiveData()
+    val isFavorite
+        get() = checkNotNull(_isFavorite.value)
 
-    fun setFavoriteState(isFavorite: Boolean){
-        _isFavorite = isFavorite
+    fun setFavoriteState(isFavorite: Boolean) {
+        _isFavorite.value = isFavorite
     }
 
+
+    fun toggleFavorite(){
+        Log.d("DetailViewModel", "pre toggle: $isFavorite")
+        _isFavorite.value = !isFavorite
+        Log.d("DetailViewModel", "post toggle: $isFavorite")
+    }
+
+    private var _username: MutableLiveData<String> = MutableLiveData()
+    val username
+        get() = checkNotNull(_username.value)
     fun setUsername(username: String) {
+        _username.value = username
         viewModelScope.launch {
             getUserDetails(username)
             getUserRepositories(username)
@@ -36,6 +49,7 @@ class DetailViewModel @Inject constructor(
             getUserFollowing(username)
         }
     }
+
 
     private val _userDetails: MutableLiveData<Resource<User>> = MutableLiveData()
     private suspend fun getUserDetails(username: String) = withContext(ioDispatcher) {
@@ -57,7 +71,7 @@ class DetailViewModel @Inject constructor(
             _userDetails.postValue(
                 Resource.error(
                     null,
-                    message = exception.message ?: "Error occured: ${exception}"
+                    message = exception.message ?: "Error occured: ${exception.stackTrace}"
                 )
             )
         }
@@ -152,10 +166,10 @@ class DetailViewModel @Inject constructor(
     val userRepositories get(): LiveData<Resource<List<Repository>>> = _userRepositories
 
     fun addUserToFavorite() {
-        val user = userDetails.value?.data!!
-        val followers = userFollowers.value?.data!!
-        val following = userFollowing.value?.data!!
-        val repos = userRepositories.value?.data!!
+        val user = checkNotNull(userDetails.value?.data)
+        val followers = checkNotNull(userFollowers.value?.data)
+        val following = checkNotNull(userFollowing.value?.data)
+        val repos = checkNotNull(userRepositories.value?.data)
 
         viewModelScope.launch(ioDispatcher) {
             repository.addUserToFavorite(user, followers, following, repos)
@@ -163,7 +177,7 @@ class DetailViewModel @Inject constructor(
     }
 
     fun removeUserFromFavorite() {
-        val user = userDetails.value?.data!!
+        val user = checkNotNull(userDetails.value?.data)
 
         viewModelScope.launch(ioDispatcher) {
             repository.removeUserFromFavorite(user)
