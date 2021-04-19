@@ -104,7 +104,8 @@ class DetailActivity : AppCompatActivity() {
                         bind(result)
                     }
                 }
-                LOADING -> {}
+                LOADING -> {
+                }
                 ERROR -> Log.e(TAG, resource.message.toString())
             }
         })

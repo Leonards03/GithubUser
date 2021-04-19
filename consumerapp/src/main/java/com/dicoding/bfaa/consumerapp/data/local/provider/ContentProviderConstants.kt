@@ -1,6 +1,5 @@
 package com.dicoding.bfaa.consumerapp.data.local.provider
 
-import android.content.UriMatcher
 import android.net.Uri
 
 object ContentProviderConstants {

@@ -37,9 +37,9 @@ class LocalDataSource {
         return query(context, uri)
     }
 
-    fun removeUserFromFavorite(username: String, context: Context){
+    fun removeUserFromFavorite(username: String, context: Context) {
         val uri = getContentURI(USER_ID, username)
-        context.contentResolver.delete(uri,null,null)
+        context.contentResolver.delete(uri, null, null)
     }
 
     private fun query(context: Context, uri: Uri): Cursor? {

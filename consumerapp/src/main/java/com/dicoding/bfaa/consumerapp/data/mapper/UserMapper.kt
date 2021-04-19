@@ -10,8 +10,8 @@ class UserMapper : ModelMapper<User, Cursor> {
         return value ?: String()
     }
 
-    override fun mapFromEntity(entity: Cursor): User {
-        entity.apply {
+    override fun mapFromCursor(cursor: Cursor): User {
+        cursor.apply {
             return User(
                 getString(getColumnIndex("username")),
                 getString(getColumnIndex("name")),
@@ -25,7 +25,7 @@ class UserMapper : ModelMapper<User, Cursor> {
         }
     }
 
-    fun mapFromFollowEntity(entity: Cursor): User {
+    fun mapFromFollowCursor(entity: Cursor): User {
         entity.apply {
             return User(
                 getString(getColumnIndex("username")),
@@ -34,7 +34,4 @@ class UserMapper : ModelMapper<User, Cursor> {
         }
     }
 
-    override fun mapToEntity(model: User): Cursor {
-        TODO("Not yet implemented")
-    }
 }

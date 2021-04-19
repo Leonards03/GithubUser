@@ -77,8 +77,8 @@ class HomeActivity : AppCompatActivity() {
         contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
     }
 
-    private fun showEmptyState(){
-        if(userAdapter.itemCount == 0){
+    private fun showEmptyState() {
+        if (userAdapter.itemCount == 0) {
             binding.emptyState.visible()
         }
     }

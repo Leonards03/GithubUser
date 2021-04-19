@@ -22,14 +22,4 @@ class HomeViewModel @Inject constructor(
             emit(Resource.error(null, message = exception.message ?: "Error occured"))
         }
     }
-
-    fun getFollowers(username: String,context: Context) = liveData(Dispatchers.IO) {
-        emit(Resource.loading(null))
-        try {
-            emit(Resource.success(repository.getFollowers(username,context)))
-        } catch (exception: Exception) {
-            emit(Resource.error(null, message = exception.message ?: "Error occured"))
-        }
-    }
-
 }

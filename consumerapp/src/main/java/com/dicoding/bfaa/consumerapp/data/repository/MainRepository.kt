@@ -20,7 +20,7 @@ class MainRepository @Inject constructor(
 
         cursor?.apply {
             while (moveToNext()) {
-                val user = userMapper.mapFromEntity(this)
+                val user = userMapper.mapFromCursor(this)
                 userList.add(user)
             }
         }
@@ -31,7 +31,7 @@ class MainRepository @Inject constructor(
         val cursor = localDataSource.getUser(username, context)
         cursor?.apply {
             while (moveToNext())
-                return userMapper.mapFromEntity(this)
+                return userMapper.mapFromCursor(this)
         }
         return User("N/A", "N/A")
     }
@@ -41,7 +41,7 @@ class MainRepository @Inject constructor(
         val userList = ArrayList<User>()
         cursor?.apply {
             while (moveToNext()) {
-                val user = userMapper.mapFromFollowEntity(this)
+                val user = userMapper.mapFromFollowCursor(this)
                 userList.add(user)
             }
         }
@@ -54,7 +54,7 @@ class MainRepository @Inject constructor(
 
         cursor?.apply {
             while (moveToNext()) {
-                val user = userMapper.mapFromFollowEntity(this)
+                val user = userMapper.mapFromFollowCursor(this)
                 userList.add(user)
             }
         }
@@ -67,7 +67,7 @@ class MainRepository @Inject constructor(
 
         cursor?.apply {
             while (moveToNext()) {
-                val repo = repositoryMapper.mapFromEntity(this)
+                val repo = repositoryMapper.mapFromCursor(this)
                 repositories.add(repo)
             }
         }

@@ -9,7 +9,7 @@ import com.dicoding.bfaa.consumerapp.R
 import com.dicoding.bfaa.consumerapp.data.model.User
 import com.dicoding.bfaa.consumerapp.databinding.ItemRowLayoutBinding
 
-class FollowAdapter: RecyclerView.Adapter<FollowAdapter.FollowViewHolder>() {
+class FollowAdapter : RecyclerView.Adapter<FollowAdapter.FollowViewHolder>() {
     private val userList = ArrayList<User>()
 
     fun setUsers(list: List<User>) {
@@ -41,7 +41,7 @@ class FollowAdapter: RecyclerView.Adapter<FollowAdapter.FollowViewHolder>() {
             ItemRowLayoutBinding.bind(itemView)
         }
 
-        fun bind(user: User){
+        fun bind(user: User) {
             binding.apply {
                 tvUsername.text = user.username
                 Glide

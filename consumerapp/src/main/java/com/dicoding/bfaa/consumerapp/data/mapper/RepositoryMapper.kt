@@ -5,8 +5,8 @@ import androidx.core.database.getStringOrNull
 import com.dicoding.bfaa.consumerapp.data.model.Repository
 
 class RepositoryMapper : ModelMapper<Repository, Cursor> {
-    override fun mapFromEntity(entity: Cursor): Repository {
-        entity.apply {
+    override fun mapFromCursor(cursor: Cursor): Repository {
+        cursor.apply {
             val owner = getString(getColumnIndex("owner"))
             val name = getString(getColumnIndex("name"))
             val url = getString(getColumnIndex("url"))
@@ -15,9 +15,6 @@ class RepositoryMapper : ModelMapper<Repository, Cursor> {
         }
     }
 
-    override fun mapToEntity(model: Repository): Cursor {
-        TODO("Not yet implemented")
-    }
 
     private fun valueOrEmpty(value: String?): String {
         return value ?: String()
