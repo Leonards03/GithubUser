@@ -25,8 +25,8 @@ abstract class GithubDatabase : RoomDatabase() {
     abstract fun repoDao(): RepositoryDao
 
     companion object {
-        const val AUTHORITY = "com.dicoding.bfaa.githubuser"
         private const val SCHEME = "content"
+        const val AUTHORITY = "com.dicoding.bfaa.githubuser"
         const val USERS_TABLE = "users"
         const val FOLLOWERS_TABLE = "followers"
         const val FOLLOWING_TABLE = "following"
