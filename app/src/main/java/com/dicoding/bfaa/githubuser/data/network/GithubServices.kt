@@ -11,31 +11,26 @@ import retrofit2.http.Query
 interface GithubServices {
     @GET("search/users")
     suspend fun searchUsers(
-        @Query("q") query: String,
-        @Header("Authorization") token: String
+        @Query("q") query: String
     ): SearchResponse
 
     @GET("users/{username}")
     suspend fun getUserDetailByUsername(
-        @Path("username") username: String,
-        @Header("Authorization") token: String
+        @Path("username") username: String
     ): UserResponse
 
     @GET("users/{username}/followers")
     suspend fun getUserFollowersByUsername(
-        @Path("username") username: String,
-        @Header("Authorization") token: String
+        @Path("username") username: String
     ): List<UserResponse>
 
     @GET("users/{username}/following")
     suspend fun getUserFollowingByUsername(
-        @Path("username") username: String,
-        @Header("Authorization") token: String
+        @Path("username") username: String
     ): List<UserResponse>
 
     @GET("users/{username}/repos")
     suspend fun getRepositoriesByUsername(
-        @Path("username") username: String,
-        @Header("Authorization") token: String
+        @Path("username") username: String
     ): List<RepositoryResponse>
 }

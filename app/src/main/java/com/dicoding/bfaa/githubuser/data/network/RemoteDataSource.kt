@@ -6,21 +6,20 @@ import javax.inject.Inject
 class RemoteDataSource @Inject constructor(
     private val retrofit: GithubServices
 ) {
-    private val personalAuthKey: String = BuildConfig.GITHUB_PERSONAL_TOKEN
 
-    suspend fun searchUser(query: String) = retrofit.searchUsers(query, personalAuthKey)
+    suspend fun searchUser(query: String) = retrofit.searchUsers(query)
 
     suspend fun fetchUser(username: String) =
-        retrofit.getUserDetailByUsername(username, personalAuthKey)
+        retrofit.getUserDetailByUsername(username)
 
     suspend fun fetchRepositoriesByUsername(username: String) =
-        retrofit.getRepositoriesByUsername(username, personalAuthKey)
+        retrofit.getRepositoriesByUsername(username)
 
     suspend fun fetchFollowersByUsername(username: String) =
-        retrofit.getUserFollowersByUsername(username, personalAuthKey)
+        retrofit.getUserFollowersByUsername(username)
 
 
     suspend fun fetchFollowingByUsername(username: String) =
-        retrofit.getUserFollowingByUsername(username, personalAuthKey)
+        retrofit.getUserFollowingByUsername(username)
 
 }
