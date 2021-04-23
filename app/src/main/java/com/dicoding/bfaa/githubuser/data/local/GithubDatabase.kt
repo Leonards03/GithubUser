@@ -20,7 +20,7 @@ import com.dicoding.bfaa.githubuser.data.local.entity.UserEntity
     version = 1,
     exportSchema = false
 )
-abstract class GithubDatabase : RoomDatabase() {
+abstract class  GithubDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun repoDao(): RepositoryDao
 
