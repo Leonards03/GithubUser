@@ -8,6 +8,7 @@ import android.view.MenuItem
 import androidx.activity.viewModels
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
 import com.dicoding.bfaa.consumerapp.R
 import com.dicoding.bfaa.consumerapp.data.model.User
@@ -20,6 +21,8 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayoutMediator
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class DetailActivity : AppCompatActivity() {
@@ -86,6 +89,10 @@ class DetailActivity : AppCompatActivity() {
                 Snackbar.make(this@DetailActivity, btnFavorite, text, Snackbar.LENGTH_SHORT)
                     .show()
                 btnFavorite.isEnabled = false
+                lifecycleScope.launch {
+                    delay(1000L)
+                    finish()
+                }
             }
 
             BottomSheetBehavior.from(btnFavorite).apply {

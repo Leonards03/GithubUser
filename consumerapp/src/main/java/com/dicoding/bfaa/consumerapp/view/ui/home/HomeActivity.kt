@@ -8,16 +8,22 @@ import android.os.HandlerThread
 import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dicoding.bfaa.consumerapp.data.local.provider.ContentProviderConstants.CONTENT_URI
 import com.dicoding.bfaa.consumerapp.data.model.User
 import com.dicoding.bfaa.consumerapp.databinding.ActivityHomeBinding
+import com.dicoding.bfaa.consumerapp.di.IoDispatcher
 import com.dicoding.bfaa.consumerapp.extensions.invisible
 import com.dicoding.bfaa.consumerapp.extensions.visible
 import com.dicoding.bfaa.consumerapp.utils.Status.*
 import com.dicoding.bfaa.consumerapp.view.adapter.UserAdapter
 import com.dicoding.bfaa.consumerapp.view.ui.detail.DetailActivity
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeActivity : AppCompatActivity() {
@@ -26,6 +32,11 @@ class HomeActivity : AppCompatActivity() {
     }
     private val viewModel: HomeViewModel by viewModels()
     private lateinit var userAdapter: UserAdapter
+
+    @Inject
+    @IoDispatcher
+    lateinit var ioDispatcher: CoroutineDispatcher
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
@@ -51,7 +62,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.getFavoriteList(this).observe(this, { resource ->
+        viewModel.favoriteList.observe(this, { resource ->
             when (resource.status) {
                 SUCCESS -> {
                     resource.data?.let { data ->
@@ -65,13 +76,18 @@ class HomeActivity : AppCompatActivity() {
             }
         })
 
+        lifecycleScope.launch(ioDispatcher) {
+            viewModel.getFavoriteList(this@HomeActivity)
+        }
+
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
         val handler = Handler(handlerThread.looper)
         val myObserver = object : ContentObserver(handler) {
             override fun onChange(selfChange: Boolean) {
-                viewModel.getFavoriteList(this@HomeActivity)
-                userAdapter.notifyDataSetChanged()
+                CoroutineScope(ioDispatcher).launch {
+                    viewModel.getFavoriteList(this@HomeActivity)
+                }
             }
         }
         contentResolver.registerContentObserver(CONTENT_URI, true, myObserver)
