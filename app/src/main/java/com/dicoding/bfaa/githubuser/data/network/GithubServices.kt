@@ -4,7 +4,6 @@ import com.dicoding.bfaa.githubuser.data.network.responses.RepositoryResponse
 import com.dicoding.bfaa.githubuser.data.network.responses.SearchResponse
 import com.dicoding.bfaa.githubuser.data.network.responses.UserResponse
 import retrofit2.http.GET
-import retrofit2.http.Header
 import retrofit2.http.Path
 import retrofit2.http.Query
 

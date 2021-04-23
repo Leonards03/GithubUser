@@ -1,6 +1,5 @@
 package com.dicoding.bfaa.githubuser.data.network
 
-import com.dicoding.bfaa.githubuser.BuildConfig
 import javax.inject.Inject
 
 class RemoteDataSource @Inject constructor(
