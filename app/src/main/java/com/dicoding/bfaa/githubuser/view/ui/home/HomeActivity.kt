@@ -16,7 +16,7 @@ import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : AppCompatActivity(), SharedPreferences.OnSharedPreferenceChangeListener {
     private val binding: ActivityHomeBinding by lazy {
         ActivityHomeBinding.inflate(layoutInflater)
     }
@@ -45,22 +45,35 @@ class HomeActivity : AppCompatActivity() {
         }
 
         sharedPreference = PreferenceManager.getDefaultSharedPreferences(this)
-        sharedPreference.registerOnSharedPreferenceChangeListener { prefs, key ->
-            val isReminderActive = prefs.getBoolean(key, false)
-            if (isReminderActive) {
-                reminderReceiver.setDailyReminder(
-                    this@HomeActivity,
-                    getString(R.string.notification_title),
-                    getString(R.string.notification_text)
-                )
-            } else {
-                reminderReceiver.cancelDailyReminder(this@HomeActivity)
-            }
-        }
+        sharedPreference.registerOnSharedPreferenceChangeListener(this)
+
     }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        sharedPreference.registerOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        sharedPreference.unregisterOnSharedPreferenceChangeListener(this)
+    }
+
+    override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String?) {
+        val isReminderActive = sharedPreferences.getBoolean(key, false)
+        if (isReminderActive) {
+            reminderReceiver.setDailyReminder(
+                this@HomeActivity,
+                getString(R.string.notification_title),
+                getString(R.string.notification_text)
+            )
+        } else {
+            reminderReceiver.cancelDailyReminder(this@HomeActivity)
+        }
     }
 }
