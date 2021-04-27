@@ -16,6 +16,7 @@ import com.dicoding.bfaa.consumerapp.databinding.ActivityHomeBinding
 import com.dicoding.bfaa.consumerapp.di.IoDispatcher
 import com.dicoding.bfaa.consumerapp.extensions.invisible
 import com.dicoding.bfaa.consumerapp.extensions.visible
+import com.dicoding.bfaa.consumerapp.utils.Resource
 import com.dicoding.bfaa.consumerapp.utils.Status.*
 import com.dicoding.bfaa.consumerapp.view.adapter.UserAdapter
 import com.dicoding.bfaa.consumerapp.view.ui.detail.DetailActivity
@@ -62,24 +63,30 @@ class HomeActivity : AppCompatActivity() {
     }
 
     private fun setupObservers() {
-        viewModel.favoriteList.observe(this, { resource ->
-            when (resource.status) {
-                SUCCESS -> {
-                    resource.data?.let { data ->
-                        setLoadingState(false)
-                        userAdapter.setUsers(data)
-                        showEmptyState()
-                    }
-                }
-                LOADING -> setLoadingState(true)
-                ERROR -> Log.e(TAG, resource.message ?: "Error Occured")
-            }
-        })
+        viewModel.favoriteList.observe(this, ::observeFavoriteUserList)
 
         lifecycleScope.launch(ioDispatcher) {
             viewModel.getFavoriteList(this@HomeActivity)
         }
+        
+        observeContentResolver()
+    }
 
+    private fun observeFavoriteUserList(resource: Resource<List<User>>){
+        when (resource.status) {
+            SUCCESS -> {
+                resource.data?.let { data ->
+                    setLoadingState(false)
+                    userAdapter.setUsers(data)
+                    showEmptyState()
+                }
+            }
+            LOADING -> setLoadingState(true)
+            ERROR -> Log.e(TAG, resource.message ?: "Error Occured")
+        }
+    }
+
+    private fun observeContentResolver(){
         val handlerThread = HandlerThread("DataObserver")
         handlerThread.start()
         val handler = Handler(handlerThread.looper)
