@@ -13,7 +13,7 @@
         <item
             android:id="@+id/navigation_favorite"
             android:icon="@drawable/ic_baseline_star_24"
-            android:title="@string/nav_favorite_user"/>h
+            android:title="@string/nav_favorite_user"/>
 
         <item
             android:id="@+id/navigation_settings"
