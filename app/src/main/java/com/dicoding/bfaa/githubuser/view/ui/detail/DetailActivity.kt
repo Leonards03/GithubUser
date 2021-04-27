@@ -17,6 +17,7 @@ import com.dicoding.bfaa.githubuser.data.model.User
 import com.dicoding.bfaa.githubuser.databinding.ActivityDetailBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
+import com.dicoding.bfaa.githubuser.utils.Resource
 import com.dicoding.bfaa.githubuser.utils.Status.*
 import com.dicoding.bfaa.githubuser.view.adapter.DetailPagerAdapter
 import com.dicoding.bfaa.githubuser.widget.FavoriteUserAppWidget
@@ -115,19 +116,21 @@ class DetailActivity : AppCompatActivity() {
 
     private fun setupObservers(username: String) {
         detailViewModel.setUsername(username)
-        detailViewModel.userDetails.observe(this, { resource ->
-            when (resource.status) {
-                SUCCESS -> {
-                    binding.btnFavorite.isEnabled = true
-                    resource.data?.let { result ->
-                        bind(result)
-                    }
+        detailViewModel.userDetails.observe(this, ::observeUserDetail)
+    }
+
+    private fun observeUserDetail(resource: Resource<User>){
+        when (resource.status) {
+            SUCCESS -> {
+                binding.btnFavorite.isEnabled = true
+                resource.data?.let { result ->
+                    bind(result)
                 }
-                LOADING -> {
-                }
-                ERROR -> Log.e(TAG, resource.message.toString())
             }
-        })
+            LOADING -> {
+            }
+            ERROR -> Log.e(TAG, resource.message.toString())
+        }
     }
 
     private fun setupFavoriteButton(isFavorite: Boolean) {
@@ -187,7 +190,6 @@ class DetailActivity : AppCompatActivity() {
             }.attach()
         }
     }
-
 
     private fun setActionBarTitle(title: String) {
         enableBackButton()
