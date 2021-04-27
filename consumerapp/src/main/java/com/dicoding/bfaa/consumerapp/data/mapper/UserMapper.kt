@@ -5,11 +5,6 @@ import com.dicoding.bfaa.consumerapp.data.model.User
 
 @Suppress("UNCHECKED_CAST")
 class UserMapper : ModelMapper<User, Cursor> {
-
-    private fun valueOrEmpty(value: String?): String {
-        return value ?: String()
-    }
-
     override fun mapFromCursor(cursor: Cursor): User {
         cursor.apply {
             return User(
