@@ -72,7 +72,7 @@ class RepositoriesFragment : Fragment() {
     }
 
     private fun setLoadingState(isDataLoading: Boolean) {
-        with(binding!!) {
+        binding?.apply{
             if (isDataLoading) {
                 loading.visible()
                 rvRepositories.invisible()
