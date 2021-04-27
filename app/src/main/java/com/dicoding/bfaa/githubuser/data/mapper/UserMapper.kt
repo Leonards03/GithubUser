@@ -83,7 +83,7 @@ class UserMapper : ModelMapper<UserResponse, User, UserEntity> {
     fun mapFromEntities(entities: List<UserEntity>): List<User> =
         entities.map { entity -> mapFromEntity(entity) }
 
-    fun mapToModel(cursor: Cursor): User{
+    private fun mapToModel(cursor: Cursor): User{
         cursor.apply {
             return User(
                 getString(getColumnIndex("username")),
