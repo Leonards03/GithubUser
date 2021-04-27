@@ -6,6 +6,7 @@
 
     <ImageView
         android:id="@+id/img_photo"
+        android:contentDescription="@string/favorite_user_profile_picture"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:adjustViewBounds="true"
