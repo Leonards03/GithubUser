@@ -10,9 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.dicoding.bfaa.githubuser.data.model.User
 import com.dicoding.bfaa.githubuser.databinding.FragmentFavoriteBinding
 import com.dicoding.bfaa.githubuser.extensions.invisible
 import com.dicoding.bfaa.githubuser.extensions.visible
+import com.dicoding.bfaa.githubuser.utils.Resource
 import com.dicoding.bfaa.githubuser.utils.Status
 import com.dicoding.bfaa.githubuser.view.adapter.UserAdapter
 import com.dicoding.bfaa.githubuser.view.ui.detail.DetailActivity
@@ -62,19 +64,21 @@ class FavoriteFragment : Fragment() {
     }
 
     private fun setupObservers() {
-        viewModel.favoriteUser.observe(requireActivity(), { resource ->
-            when (resource.status) {
-                Status.SUCCESS -> {
-                    resource.data?.let { result ->
-                        setLoadingState(false)
-                        userAdapter.setUsers(result)
-                        showEmptyState()
-                    }
+        viewModel.favoriteUser.observe(requireActivity(), ::observeFavoriteUserList)
+    }
+
+    private fun observeFavoriteUserList(resource: Resource<List<User>>){
+        when (resource.status) {
+            Status.SUCCESS -> {
+                resource.data?.let { result ->
+                    setLoadingState(false)
+                    userAdapter.setUsers(result)
+                    showEmptyState()
                 }
-                Status.LOADING -> setLoadingState(true)
-                Status.ERROR -> Log.e(TAG, resource.message.toString())
             }
-        })
+            Status.LOADING -> setLoadingState(true)
+            Status.ERROR -> Log.e(TAG, resource.message.toString())
+        }
     }
 
     private fun showEmptyState() {
